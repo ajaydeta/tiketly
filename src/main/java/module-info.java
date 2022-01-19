@@ -9,4 +9,5 @@ module com.tiketly.tiketly {
     opens com.tiketly.tiketly to javafx.fxml;
     exports com.tiketly.tiketly;
     exports com.tiketly.tiketly.controller;
+    exports helper;
 }
