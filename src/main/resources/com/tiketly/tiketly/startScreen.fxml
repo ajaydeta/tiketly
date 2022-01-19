@@ -8,36 +8,32 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.StartScreen">
-   <children>
-      <ImageView fitHeight="100.0" fitWidth="292.0" layoutX="494.0" layoutY="208.0">
-         <image>
-            <Image url="@assets/logo.png" />
-         </image>
-      </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="435.0" layoutY="317.0" prefHeight="70.0" prefWidth="409.0" text="Selamat Datang " textAlignment="RIGHT" textFill="#f2c94c">
-         <font>
-            <Font name="System Bold" size="48.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="433.0" layoutY="382.0" prefHeight="35.0" prefWidth="190.0" text="Beli tiket bioskop">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="616.0" layoutY="382.0" prefHeight="35.0" prefWidth="231.0" text="terlengkap &amp; murah" textFill="#f2c94c">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Button layoutX="512.0" layoutY="453.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="103.0" style="-fx-background-color: #EB5757;" text="Masuk" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="653.0" layoutY="453.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="114.0" style="-fx-background-color: #F2C94C;" text="Buat Akun" textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-   </children>
+   <ImageView fitHeight="100.0" fitWidth="292.0" layoutX="494.0" layoutY="208.0">
+      <Image url="@assets/logo.png" />
+   </ImageView>
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="435.0" layoutY="317.0" prefHeight="70.0" prefWidth="409.0" text="Selamat Datang " textAlignment="RIGHT" textFill="#f2c94c">
+      <font>
+         <Font name="System Bold" size="48.0" />
+      </font>
+   </Label>
+   <Label alignment="CENTER" layoutX="426.0" layoutY="382.0" prefHeight="35.0" prefWidth="190.0" text="Beli tiket bioskop">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Label alignment="CENTER" layoutX="616.0" layoutY="382.0" prefHeight="35.0" prefWidth="231.0" style="-fx-font-weight: bold;" text="terlengkap &amp; murah" textFill="#f2c94c">
+      <font>
+         <Font size="24.0" />
+      </font>
+   </Label>
+   <Button fx:id="btnMasuk" layoutX="512.0" layoutY="453.0" mnemonicParsing="false" onAction="#masuk" prefHeight="39.0" prefWidth="103.0" style="-fx-background-color: #EB5757;" text="Masuk" textFill="WHITE">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Button>
+   <Button fx:id="btnBuatAkun" layoutX="653.0" layoutY="453.0" mnemonicParsing="false" onAction="#buatAkun" prefHeight="39.0" prefWidth="114.0" style="-fx-background-color: #F2C94C;" text="Buat Akun" textFill="WHITE">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Button>
 </AnchorPane>
