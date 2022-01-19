@@ -4,13 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class Login {
-    public Button btnMasuk;
+public class Registrasi {
+    public Button btnBuatAkun;
     public Button btnKembali;
-    public TextField usernameField;
     public TextField passwordField;
+    public TextField usernameFIeld;
 
-    public void masuk(ActionEvent actionEvent) {
+    public void buatAkun(ActionEvent actionEvent) {
     }
 
     public void kembali(ActionEvent actionEvent) {
