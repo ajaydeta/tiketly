@@ -1,0 +1,5 @@
+.center-pane{
+    //-fx-margin: auto;
+    -fx-background-color: black;
+    margin: auto;
+}
