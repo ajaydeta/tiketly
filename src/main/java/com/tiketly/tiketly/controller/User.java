@@ -21,6 +21,7 @@ public class User {
     public TextField noField;
     public DatePicker dateField;
     public Button btnSimpan;
+    public PasswordField password;
 
     public void jadwalOnClick(ActionEvent actionEvent) {
     }

@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -17,6 +18,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -31,12 +34,14 @@ public class Jadwal implements Initializable {
     public TableColumn jadwalCol;
     public TableColumn noCol;
     public TableColumn pukulCol;
-    public TextField namaFilmField;
+    public ChoiceBox namaFilm;
     public TextField bioskopField;
     public DatePicker dateField;
     public TextField timeField;
     public Button btnSimpan;
     public TextField btnStok;
+    public TableColumn stokCol;
+    public Button btnAddFilm;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -70,6 +75,11 @@ public class Jadwal implements Initializable {
     }
 
     public void simpanOnClick(ActionEvent actionEvent) throws IOException {
-        jancok(actionEvent);
+        LocalDateTime xx = LocalDateTime.parse(dateField.getValue().toString()+" 15:30", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        System.out.println(xx);
+//        jancok(actionEvent);
+    }
+
+    public void addFilm(ActionEvent actionEvent) {
     }
 }

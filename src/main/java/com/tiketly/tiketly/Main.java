@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 //        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("startScreen.fxml"));
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("tiket.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("jadwal.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1248, 720);
         stage.setTitle("Tiketly.id");
         stage.setScene(scene);
