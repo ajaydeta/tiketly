@@ -92,30 +92,30 @@
             </columnResizePolicy>
          </TableView>
          <AnchorPane prefHeight="231.0" prefWidth="914.0" style="-fx-background-color: #BDBDBD;">
-            <TextField fx:id="namaField" layoutX="27.0" layoutY="61.0" prefHeight="38.0" prefWidth="172.0" promptText="Ahmad Bambang" />
-            <TextField fx:id="noField" layoutX="223.0" layoutY="61.0" prefHeight="38.0" prefWidth="177.0" promptText="085123456788" />
+            <TextField fx:id="namaField" layoutX="27.0" layoutY="61.0" prefHeight="38.0" prefWidth="210.0" promptText="Ahmad Bambang" />
+            <PasswordField fx:id="password" layoutX="258.0" layoutY="62.0" prefHeight="38.0" prefWidth="210.0" />
+            <TextField fx:id="noField" layoutX="488.0" layoutY="61.0" prefHeight="38.0" prefWidth="210.0" promptText="085123456788" />
+            <DatePicker fx:id="dateField" layoutX="720.0" layoutY="62.0" prefHeight="38.0" prefWidth="164.0" promptText="1/21/2022" />
+            <Label layoutX="258.0" layoutY="36.0" prefHeight="27.0" prefWidth="98.0" text="Password">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
             <Label layoutX="28.0" layoutY="35.0" prefHeight="27.0" prefWidth="55.0" text="Nama">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="223.0" layoutY="35.0" prefHeight="27.0" prefWidth="98.0" text="No Telpon">
+            <Label layoutX="488.0" layoutY="35.0" prefHeight="27.0" prefWidth="98.0" text="No Telpon">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="634.0" layoutY="35.0" prefHeight="27.0" prefWidth="134.0" text="Tanggal Lahir">
+            <Label layoutX="721.0" layoutY="35.0" prefHeight="27.0" prefWidth="134.0" text="Tanggal Lahir">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <DatePicker fx:id="dateField" layoutX="633.0" layoutY="62.0" prefHeight="38.0" prefWidth="251.0" promptText="1/21/2022" />
-            <Label layoutX="423.0" layoutY="35.0" prefHeight="27.0" prefWidth="98.0" text="Password">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="password" layoutX="423.0" layoutY="62.0" prefHeight="38.0" prefWidth="183.0" />
             <Button fx:id="btnSimpan" layoutX="24.0" layoutY="126.0" mnemonicParsing="false" onAction="#simpanOnClick" prefHeight="51.0" prefWidth="128.0" style="-fx-background-color: #F2C94C;" text="Simpan">
                <font>
                   <Font size="24.0" />
