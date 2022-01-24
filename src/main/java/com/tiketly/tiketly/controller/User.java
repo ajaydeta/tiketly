@@ -5,25 +5,22 @@ import helper.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.UserCell;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class User {
+public class User implements Initializable {
     public Button btnJadwal;
     public Button btnTIket;
     public Button btnPengguna;
     public Button btnKeluar;
-    public TableView tableJadwalFilm;
-    public TableColumn idCol;
-    public TableColumn namaCol;
-    public TableColumn noCol;
-    public TableColumn dateCol;
+    public TableView<UserCell> tableJadwalFilm;
 
     //FORM Add/Update user data
     public TextField namaField;
@@ -32,13 +29,41 @@ public class User {
     public DatePicker dateField;
     public Button btnSimpan;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        TableColumn<UserCell, String> idCol = new TableColumn<>("ID Pengguna");
+        idCol.setCellValueFactory(new PropertyValueFactory<>("idUser"));
+
+        TableColumn<UserCell, String> namaCol = new TableColumn<>("Nama");
+        namaCol.setCellValueFactory(new PropertyValueFactory<>("nama"));
+
+        TableColumn<UserCell, String> noCol = new TableColumn<>("No Telpon");
+        noCol.setCellValueFactory(new PropertyValueFactory<>("telp"));
+
+        TableColumn<UserCell, String> dateCol = new TableColumn<>("Tanggal lahir");
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("tglLahir"));
+
+        tableJadwalFilm.getColumns().add(idCol);
+        tableJadwalFilm.getColumns().add(namaCol);
+        tableJadwalFilm.getColumns().add(noCol);
+        tableJadwalFilm.getColumns().add(dateCol);
+
+        tableJadwalFilm.getItems().add(new UserCell("hahaha", "huhuh", "hehehe", "hohoh"));
+        tableJadwalFilm.getItems().add(new UserCell("hahaha", "huhuh", "hehehe", "hohoh"));
+        tableJadwalFilm.getItems().add(new UserCell("hahaha", "huhuh", "hehehe", "hohoh"));
+
+        System.out.println(tableJadwalFilm.getItems());
+    }
 
     public void simpanOnClick(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        String nama, passwordStr, telp;
+        String idUser, nama, passwordStr, telp;
         LocalDate tglLahir;
+        Helper helper = new Helper();
+        Database database = new Database();
 
+        idUser      = helper.generateIdUser();
         nama        = namaField.getText();
-        passwordStr =  password.getText();
+        passwordStr = password.getText();
         telp        = noField.getText();
         tglLahir    = dateField.getValue();
 
@@ -47,12 +72,9 @@ public class User {
         System.out.println("telp: "+telp);
         System.out.println("tglLahir: "+tglLahir);
 
-        Helper helper = new Helper();
-        Database database = new Database();
-//        Connection db = database.getConnection();
         String[] colName = {"iduser","nama", "telp", "password", "tanggal_lahir"};
         PreparedStatement insertStm = database.getInstert("user", colName);
-        insertStm.setString(1,helper.generateIdUser());
+        insertStm.setString(1,idUser);
         insertStm.setString(2,nama);
         insertStm.setString(3,telp);
         insertStm.setString(4,passwordStr);
@@ -60,7 +82,7 @@ public class User {
         System.out.println(insertStm);
         if (insertStm.executeUpdate() > 0){
             System.out.println("sukses");
-//            tableJadwalFilm.setItems();
+            tableJadwalFilm.getItems().add(new UserCell(idUser, nama, telp, tglLahir.toString()));
         }
 
     }

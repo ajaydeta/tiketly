@@ -4,7 +4,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -81,19 +80,20 @@
             </Label>
          </AnchorPane>
          <TableView fx:id="tableJadwalFilm" prefWidth="914.0" VBox.vgrow="ALWAYS">
-            <columns>
-               <TableColumn fx:id="idCol" prefWidth="168.0" text="ID Pengguna" />
-               <TableColumn fx:id="namaCol" prefWidth="244.0" text="Nama" />
-               <TableColumn fx:id="noCol" prefWidth="263.0" text="No Telpon" />
-               <TableColumn fx:id="dateCol" minWidth="0.0" prefWidth="238.0" text="Tanggal lahir" />
-            </columns>
             <columnResizePolicy>
                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
          </TableView>
          <AnchorPane prefHeight="231.0" prefWidth="914.0" style="-fx-background-color: #BDBDBD;">
             <TextField fx:id="namaField" layoutX="27.0" layoutY="61.0" prefHeight="38.0" prefWidth="210.0" promptText="Ahmad Bambang" />
+            <PasswordField fx:id="password" layoutX="258.0" layoutY="62.0" prefHeight="38.0" prefWidth="210.0" />
             <TextField fx:id="noField" layoutX="488.0" layoutY="61.0" prefHeight="38.0" prefWidth="210.0" promptText="085123456788" />
+            <DatePicker fx:id="dateField" layoutX="720.0" layoutY="62.0" prefHeight="38.0" prefWidth="164.0" promptText="1/21/2022" />
+            <Label layoutX="258.0" layoutY="36.0" prefHeight="27.0" prefWidth="98.0" text="Password">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
             <Label layoutX="28.0" layoutY="35.0" prefHeight="27.0" prefWidth="55.0" text="Nama">
                <font>
                   <Font name="System Bold" size="18.0" />
@@ -109,13 +109,6 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <DatePicker fx:id="dateField" layoutX="720.0" layoutY="62.0" prefHeight="38.0" prefWidth="164.0" promptText="1/21/2022" />
-            <Label layoutX="258.0" layoutY="36.0" prefHeight="27.0" prefWidth="98.0" text="Password">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <PasswordField fx:id="password" layoutX="258.0" layoutY="62.0" prefHeight="38.0" prefWidth="210.0" />
             <Button fx:id="btnSimpan" layoutX="24.0" layoutY="126.0" mnemonicParsing="false" onAction="#simpanOnClick" prefHeight="51.0" prefWidth="128.0" style="-fx-background-color: #F2C94C;" text="Simpan">
                <font>
                   <Font size="24.0" />

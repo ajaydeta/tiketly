@@ -14,4 +14,5 @@ module com.tiketly.tiketly {
     exports com.tiketly.tiketly.controller;
     exports helper;
     exports database;
+    exports model;
 }
