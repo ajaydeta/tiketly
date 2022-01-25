@@ -11,8 +11,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 //        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("startScreen.fxml"));
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("user.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1248, 720);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 658, 569);
+        stage.setResizable(false);
         stage.setTitle("Tiketly.id");
         stage.setScene(scene);
         stage.show();

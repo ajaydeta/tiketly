@@ -19,6 +19,7 @@ public class Navigation extends Helper{
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(true);
         stage.setMaximized(false);
         stage.setMaximized(true);
         stage.setMinWidth(750);
