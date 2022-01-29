@@ -12,8 +12,12 @@ import java.net.URL;
 import java.nio.file.Paths;
 
 public class Navigation extends Helper{
+    private static final String baseViewUrl = "src/main/resources/com/tiketly/tiketly/views/";
     public void navigate(ActionEvent actionEvent, String path) throws IOException {
-        URL url = Paths.get(path).toUri().toURL();
+        if (!path.endsWith(".fxml")){
+            path += ".fxml";
+        }
+        URL url = Paths.get(baseViewUrl+path).toUri().toURL();
         Parent root = FXMLLoader.load(url); // loads scene
         Scene nodeScene = ((Node) actionEvent.getSource()).getScene();
         nodeScene.setRoot(root);

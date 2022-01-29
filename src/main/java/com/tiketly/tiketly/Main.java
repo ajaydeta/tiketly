@@ -6,11 +6,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("play.fxml"));
+        URL url = Paths.get("src/main/resources/com/tiketly/tiketly/views/admin/kelolaKasir.fxml").toUri().toURL();
+//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(".src/main/resources/com/tiketly/tiketly/views/admin/kelolaBioskop.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(url);
         Scene scene = new Scene(fxmlLoader.load(), 658, 569);
 //        stage.setFullScreen(true);
         stage.setTitle("Tiketly.id");
