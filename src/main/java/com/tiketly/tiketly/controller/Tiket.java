@@ -4,7 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import routes.Routes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -15,6 +17,8 @@ public class Tiket implements Initializable {
     public Button btnKeluar;
     public Button btnPengguna;
     public Label pesanDisclaimer;
+
+    Routes routes = new Routes();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -28,15 +32,18 @@ public class Tiket implements Initializable {
         );
     }
 
-    public void jadwalOnClick(ActionEvent actionEvent) {
+    public void jadwalOnClick(ActionEvent actionEvent) throws IOException {
+        routes.toJadwal(actionEvent);
     }
 
-    public void tiketOnClick(ActionEvent actionEvent) {
+    public void tiketOnClick(ActionEvent actionEvent) throws IOException {
+        routes.toTiket(actionEvent);
     }
 
     public void keluarOnClick(ActionEvent actionEvent) {
     }
 
-    public void penggunaOnClick(ActionEvent actionEvent) {
+    public void penggunaOnClick(ActionEvent actionEvent) throws IOException {
+        routes.toUser(actionEvent);
     }
 }

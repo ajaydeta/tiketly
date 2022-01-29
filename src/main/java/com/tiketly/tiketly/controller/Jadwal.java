@@ -1,6 +1,8 @@
 package com.tiketly.tiketly.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import helper.DataTravel;
+import helper.Helper;
 import helper.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +12,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import routes.Routes;
 
 import javax.swing.text.AbstractDocument;
 import java.io.IOException;
@@ -42,36 +47,44 @@ public class Jadwal implements Initializable {
     public TextField btnStok;
     public TableColumn stokCol;
     public Button btnAddFilm;
+    public Button btnHapus;
+    public VBox formKelolaJadwal;
+    public HBox rootPane;
+
+    Routes routes = new Routes();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Helper helper = new Helper();
         DataTravel dataTravel = DataTravel.getInstance();
         Map<String, String> data = dataTravel.getData();
-        System.out.println("data");
-    }
+        Map<String, String> session = null;
+        try {
+            session = helper.jsonStringToMap(data.get("session"));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        assert session != null;
+        System.out.println(session.get("role"));
 
-    public void jancok(ActionEvent event) throws IOException {
-        Stage stage = new Stage();
-        URL url = Paths.get("./src/main/resources/com/tiketly/tiketly/jadwal.fxml").toUri().toURL();
-        Parent root = FXMLLoader.load(url);
-        stage.setScene(new Scene(root));
-        stage.setTitle("My modal window");
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(
-                ((Node)event.getSource()).getScene().getWindow() );
-        stage.show();
+        if (session.get("role").equals("2")){
+            btnPengguna.setVisible(false);
+            rootPane.getChildren().remove(formKelolaJadwal);
+        }
     }
 
     public void jadwalOnClick(ActionEvent actionEvent) {
     }
 
-    public void tiketOnClick(ActionEvent actionEvent) {
+    public void tiketOnClick(ActionEvent actionEvent) throws IOException {
+        routes.toTiket(actionEvent);
     }
 
     public void keluarOnClick(ActionEvent actionEvent) {
     }
 
-    public void penggunaOnClick(ActionEvent actionEvent) {
+    public void penggunaOnClick(ActionEvent actionEvent) throws IOException {
+        routes.toUser(actionEvent);
     }
 
     public void simpanOnClick(ActionEvent actionEvent) throws IOException {
@@ -81,5 +94,8 @@ public class Jadwal implements Initializable {
     }
 
     public void addFilm(ActionEvent actionEvent) {
+    }
+
+    public void hapusOnClick(ActionEvent actionEvent) {
     }
 }

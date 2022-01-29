@@ -81,7 +81,7 @@
                </font>
             </Label>
          </AnchorPane>
-         <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <HBox fx:id="rootPane" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                <TableView fx:id="tableJadwalFilm" prefHeight="630.0" prefWidth="572.0" VBox.vgrow="ALWAYS">
                   <columns>
@@ -97,7 +97,7 @@
                   </columnResizePolicy>
                </TableView>
             </VBox>
-            <VBox prefHeight="630.0" prefWidth="290.0">
+            <VBox fx:id="formKelolaJadwal" prefHeight="630.0" prefWidth="290.0">
                <children>
                   <AnchorPane prefHeight="630.0" prefWidth="311.0" style="-fx-background-color: #E8E8E8;" VBox.vgrow="ALWAYS">
                      <children>
@@ -145,6 +145,11 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                        </Button>
+                        <Button fx:id="btnHapus" layoutX="14.0" layoutY="463.0" mnemonicParsing="false" onAction="#hapusOnClick" prefHeight="51.0" prefWidth="264.0" style="-fx-background-color: #EB5757;" text="Hapus Jadwal">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
                         </Button>
                      </children>
                   </AnchorPane>

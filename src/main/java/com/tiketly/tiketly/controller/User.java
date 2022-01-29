@@ -7,7 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.UserCell;
+import routes.Routes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -28,6 +30,8 @@ public class User implements Initializable {
     public PasswordField password;
     public DatePicker dateField;
     public Button btnSimpan;
+
+    Routes routes = new Routes();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -87,15 +91,18 @@ public class User implements Initializable {
 
     }
 
-    public void jadwalOnClick(ActionEvent actionEvent) {
+    public void jadwalOnClick(ActionEvent actionEvent) throws IOException {
+        routes.toJadwal(actionEvent);
     }
 
-    public void penggunaOnClick(ActionEvent actionEvent) {
+    public void tiketOnClick(ActionEvent actionEvent) throws IOException {
+        routes.toTiket(actionEvent);
     }
 
     public void keluarOnClick(ActionEvent actionEvent) {
     }
 
-    public void tiketOnClick(ActionEvent actionEvent) {
+    public void penggunaOnClick(ActionEvent actionEvent) throws IOException {
+        routes.toUser(actionEvent);
     }
 }

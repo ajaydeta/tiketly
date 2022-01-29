@@ -15,17 +15,8 @@ public class Navigation extends Helper{
     public void navigate(ActionEvent actionEvent, String path) throws IOException {
         URL url = Paths.get(path).toUri().toURL();
         Parent root = FXMLLoader.load(url); // loads scene
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow(); // Gets event source(button) then gets the stage(window)
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setResizable(true);
-        stage.setMaximized(false);
-        stage.setMaximized(true);
-        stage.setMinWidth(750);
-        stage.setMinHeight(540);
-
-        stage.show();
+        Scene nodeScene = ((Node) actionEvent.getSource()).getScene();
+        nodeScene.setRoot(root);
     }
 
 }

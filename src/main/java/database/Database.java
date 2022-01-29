@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 public class Database {
-    private String table;
+    private String tableFrom, tableName;
     private ArrayList<String> where = new ArrayList<>();
     private ArrayList<String> select = new ArrayList<>();
 
@@ -12,10 +12,11 @@ public class Database {
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/tiketly",
+                "jdbc:mysql://localhost:3306/tiketly?parseTime=True&loc=Local&characterEncoding=utf8",
                 "root",
                 ""
         );
+//        return DriverManager.getConnection("jdbc:mysql://localhost:3306/tiketly", )
     }
 
     public ArrayList<String> getColumn() throws SQLException, ClassNotFoundException {
@@ -26,8 +27,8 @@ public class Database {
                 "WHERE TABLE_SCHEMA = ? " +
                 "AND TABLE_NAME = ? ");
         stmt.setString(1, "tiketly");
-        stmt.setString(2, "user");
-        System.out.println(stmt);
+        stmt.setString(2, this.tableName);
+//        System.out.println(stmt);
         ResultSet rs = stmt.executeQuery();
         ArrayList<String> columnName = new ArrayList<>();
         while (rs.next()){
@@ -60,7 +61,8 @@ public class Database {
     }
 
     public void table(String tableName){
-        this.table = "FROM `" + tableName + "` ";
+        this.tableName = tableName;
+        this.tableFrom = "FROM `" + tableName + "` ";
     }
 
     public void where(String wh, Object... val){
@@ -89,7 +91,7 @@ public class Database {
     }
 
     public String getQueryString(){
-        String queryStr = "SELECT " + String.join(", ", this.select) + " " + this.table;
+        String queryStr = "SELECT " + String.join(", ", this.select) + " " + this.tableFrom;
         if (this.where.toArray().length > 0) {
             queryStr += "WHERE " + String.join(" AND ", this.where);
         }
@@ -98,6 +100,7 @@ public class Database {
 
     public ResultSet getResultSet() throws SQLException, ClassNotFoundException {
         Connection db = getConnection();
+        System.out.println("Executing SQL: "+ getQueryString());
         return db.prepareStatement(getQueryString()).executeQuery();
     }
 
