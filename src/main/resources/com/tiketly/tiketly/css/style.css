@@ -1,5 +1,33 @@
-.center-pane{
-    //-fx-margin: auto;
-    -fx-background-color: black;
-    margin: auto;
+.primary-color{
+    -fx-background-color: #1B607B;
+}
+
+.side-bar{
+    -fx-pref-width: 260;
+}
+
+.side-bar-btn{
+   -fx-pref-width: 180;
+   -fx-pref-height: 30;
+
+   -fx-background-color: transparent;
+   -fx-font-size: 16;
+   -fx-text-fill: #FFFFFF;
+   -fx-font-weight: bold;
+   -fx-alignment: center-left;
+}
+
+.side-bar-btn-active{
+    -fx-text-fill: #FFC901;
+}
+
+.top-bar{
+    -fx-pref-height: 59;
+    -fx-background-radius:  0 0 12 12;
+}
+
+.top-bar-label{
+    -fx-font-size: 36;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
 }

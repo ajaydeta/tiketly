@@ -9,7 +9,7 @@ public class Routes {
     Navigation navHelper = new Navigation();
 
     public void toJadwal(ActionEvent actionEvent) throws IOException {
-        String viewPath = "./src/main/resources/com/tiketly/tiketly/jadwal.fxml";
+        String viewPath = "./src/main/resources/com/tiketly/tiketly/kelolaJadwal.fxml";
         navHelper.navigate(actionEvent, viewPath);
     }
 
