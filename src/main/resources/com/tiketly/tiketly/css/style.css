@@ -76,6 +76,13 @@
     -fx-background-color: transparent;
 }
 
+.content-input-customWidth{
+    -fx-pref-height: 38;
+    -fx-border-radius: 8;
+    -fx-border-color: #1B607B;
+    -fx-background-color: transparent;
+}
+
 .content-small-label{
     -fx-text-fill: #828282;
     -fx-pref-width: 180;

@@ -13,6 +13,8 @@ public class JadwalFilm extends AdminBase{
     public DatePicker filterTanggalAkhir;
     public DatePicker filterTanggalAwal;
     public ComboBox filterBioskop;
+    public TextField hargaMin;
+    public TextField hargaMax;
 
     public void simapanJadwal(ActionEvent actionEvent) {
     }

@@ -52,8 +52,31 @@
     -fx-background-color: transparent;
 }
 
+.content-input-textarea{
+    -fx-pref-width: 215;
+    -fx-pref-height: 100;
+    -fx-border-radius: 8;
+    -fx-border-color: #1B607B;
+    -fx-background-color: transparent;
+}
+
 .content-input-short{
-    -fx-pref-width: 85;
+    -fx-pref-width: 50;
+    -fx-pref-height: 38;
+    -fx-border-radius: 8;
+    -fx-border-color: #1B607B;
+    -fx-background-color: transparent;
+}
+
+.content-input-medium{
+    -fx-pref-width: 150;
+    -fx-pref-height: 38;
+    -fx-border-radius: 8;
+    -fx-border-color: #1B607B;
+    -fx-background-color: transparent;
+}
+
+.content-input-customWidth{
     -fx-pref-height: 38;
     -fx-border-radius: 8;
     -fx-border-color: #1B607B;
@@ -109,4 +132,14 @@
 .modal-header{
     -fx-background-color: #1B607B;
     -fx-background-radius:  0 0 12 12;
+}
+
+.modal-filter-base-width{
+    -fx-pref-width: 322;
+}
+
+.modal-filter-label-header{
+    -fx-font-size: 24;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
 }
