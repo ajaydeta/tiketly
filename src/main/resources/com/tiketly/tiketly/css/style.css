@@ -52,6 +52,14 @@
     -fx-background-color: transparent;
 }
 
+.content-input-textarea{
+    -fx-pref-width: 215;
+    -fx-pref-height: 100;
+    -fx-border-radius: 8;
+    -fx-border-color: #1B607B;
+    -fx-background-color: transparent;
+}
+
 .content-input-short{
     -fx-pref-width: 85;
     -fx-pref-height: 38;

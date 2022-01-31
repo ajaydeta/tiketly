@@ -52,6 +52,14 @@
     -fx-background-color: transparent;
 }
 
+.content-input-short{
+    -fx-pref-width: 85;
+    -fx-pref-height: 38;
+    -fx-border-radius: 8;
+    -fx-border-color: #1B607B;
+    -fx-background-color: transparent;
+}
+
 .content-small-label{
     -fx-text-fill: #828282;
     -fx-pref-width: 180;
@@ -64,6 +72,10 @@
 
 .btn-primary{
     -fx-background-color: #1B607B;
+}
+
+.btn-transparent{
+    -fx-background-color: transparent;
 }
 
 .btn{
@@ -92,4 +104,9 @@
     -fx-font-size: 14;
     -fx-text-fill: #FFFFFF;
     -fx-font-weight: bold;
+}
+
+.modal-header{
+    -fx-background-color: #1B607B;
+    -fx-background-radius:  0 0 12 12;
 }
