@@ -5,14 +5,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
 
 public class Navigation extends Helper{
     private static final String baseViewUrl = "src/main/resources/com/tiketly/tiketly/views/";
+    private static final String baseModalUrl = baseViewUrl+"modal/";
+
+
     public void navigate(ActionEvent actionEvent, String path) throws IOException {
         if (!path.endsWith(".fxml")){
             path += ".fxml";
@@ -23,4 +28,20 @@ public class Navigation extends Helper{
         nodeScene.setRoot(root);
     }
 
+    public void showModal(ActionEvent actionEvent, String modalTitle, int width, int height, String path) throws IOException {
+        if (!path.endsWith(".fxml")){
+            path += ".fxml";
+        }
+
+        final Stage stage = new Stage();
+        URL url = Paths.get(baseModalUrl+path).toUri().toURL();
+        FXMLLoader fxmlLoader = new FXMLLoader(url);
+
+        stage.setResizable(false);
+        stage.setScene(new Scene(fxmlLoader.load(), width, height));
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow() );
+        stage.setTitle(modalTitle);
+        stage.show();
+    }
 }

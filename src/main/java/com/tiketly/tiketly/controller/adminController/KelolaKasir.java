@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
@@ -20,6 +21,7 @@ public class KelolaKasir extends AdminBase implements Initializable {
     public TextField idKasir;
     public ChoiceBox filterBioskop;
     public TextField search;
+    public TableView tableKaryawan;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
