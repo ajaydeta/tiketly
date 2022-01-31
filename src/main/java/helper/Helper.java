@@ -7,10 +7,10 @@ import java.util.Date;
 import java.util.Map;
 
 public class Helper {
-    public String generateIdUser(){
+    public String generateIdUser() {
         Date date = new Date();
-        int floor = (int) Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
-        return "USR"+ date.getTime() + floor;
+        int floor = randomInt(1000, 9999);
+        return "USR" + date.getTime() + floor;
     }
 
     public String mapToJson(Map<String, String> map) throws JsonProcessingException {
@@ -21,5 +21,24 @@ public class Helper {
     public Map<String, String> jsonStringToMap(String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Map.class);
+    }
+
+    public int randomInt(int min, int max) {
+        return (int) Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    public String getCapcha(String old) {
+        System.out.println("old: " + old);
+        String[] hewan = {"gajah", "kelinci", "komodo", "panda"};
+        String hewanName = "";
+        if (old != null && !old.equals("")) {
+            hewanName = hewan[randomInt(0, 3)];
+            while (hewanName.equals(old)) {
+                hewanName = hewan[randomInt(0, 3)];
+            }
+        } else {
+            hewanName = hewan[randomInt(0, 3)];
+        }
+        return hewanName;
     }
 }

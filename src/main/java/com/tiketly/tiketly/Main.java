@@ -12,11 +12,11 @@ import java.nio.file.Paths;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        URL url = Paths.get("src/main/resources/com/tiketly/tiketly/play.fxml").toUri().toURL();
-//        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(".src/main/resources/com/tiketly/tiketly/views/admin/kelolaBioskop.fxml"));
+        URL url = Paths.get("src/main/resources/com/tiketly/tiketly/login.fxml").toUri().toURL();
         FXMLLoader fxmlLoader = new FXMLLoader(url);
-        Scene scene = new Scene(fxmlLoader.load(), 658, 569);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
 //        stage.setFullScreen(true);
+//        stage.setMaximized(true);
         stage.setTitle("Tiketly.id");
         stage.setScene(scene);
         stage.show();

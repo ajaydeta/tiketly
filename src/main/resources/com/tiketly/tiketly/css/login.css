@@ -1,0 +1,63 @@
+.base{
+    -fx-background-color: #1B607B;
+}
+
+.card-login{
+   -fx-max-width: 573;
+   -fx-min-height: 573;
+
+   -fx-background-color: #FFC901;
+   -fx-background-radius: 12;
+}
+
+.title-login{
+    -fx-font-size: 36;
+   -fx-text-fill: #FFFFFF;
+   -fx-font-weight: bold;
+   -fx-alignment: center-left;
+}
+
+.subtitle-login{
+   -fx-font-size: 18;
+   -fx-text-fill: #1B607B;
+   -fx-font-weight: bold;
+   -fx-alignment: center-left;
+}
+
+.lable-input{
+    -fx-font-size: 24;
+   -fx-text-fill: #FFFFFF;
+   -fx-font-weight: bold;
+   -fx-alignment: center-left;
+}
+
+.field-input{
+    -fx-pref-height: 46;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-border-color: #1B607B;
+    -fx-background-color: #FFFFFF;
+}
+
+.field-input-full{
+    -fx-pref-width: 346;
+}
+
+.field-input-small{
+    -fx-pref-width: 164;
+}
+
+.image-capcha{
+    -fx-fit-width: 175;
+    -fx-fit-height: 147;
+}
+
+.btn{
+     -fx-padding: 8 36;
+     -fx-background-radius: 8;
+     -fx-background-color: #1B607B;
+     -fx-font-size: 24;
+     -fx-text-fill: #FFFFFF;
+     -fx-font-weight: bold;
+     -fx-alignment: center;
+}

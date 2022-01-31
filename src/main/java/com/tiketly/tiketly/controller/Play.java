@@ -1,5 +1,6 @@
 package com.tiketly.tiketly.controller;
 
+import helper.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -30,6 +31,8 @@ public class Play implements Initializable {
     public AreaChart<String, Number> chart;
     public ImageView imageVIewId;
 
+    Helper helper = new Helper();
+
 //    public static void setConstraints(Node var0, int var1, int var2, int var3, int var4) {
 //        setRowIndex(var0, var2);
 //        setColumnIndex(var0, var1);
@@ -39,6 +42,7 @@ public class Play implements Initializable {
 
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("APP start");
+        System.out.println(helper.randomInt(0,1));
 
         try {
             Image img = new Image(new FileInputStream("src/main/resources/com/tiketly/tiketly/assets/jadwal-kasir.png"));
