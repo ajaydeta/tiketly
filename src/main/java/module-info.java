@@ -13,8 +13,9 @@ module com.tiketly.tiketly {
     opens com.tiketly.tiketly to javafx.fxml;
     opens com.tiketly.tiketly.views.admin to javafx.fxml;
     exports com.tiketly.tiketly;
-    exports com.tiketly.tiketly.controller;
+//    exports com.tiketly.tiketly.controller;
     exports com.tiketly.tiketly.controller.adminController;
+    exports com.tiketly.tiketly.controller.kasirController;
     exports com.tiketly.tiketly.controller.auth;
     exports helper;
     exports database;

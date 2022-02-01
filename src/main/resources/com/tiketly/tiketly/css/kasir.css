@@ -1,0 +1,52 @@
+.bg-primary{
+    -fx-background-color: #1B607B;
+}
+
+.bg-yellow{
+    -fx-background-color: #FFC901;
+}
+
+.bg-red{
+    -fx-background-color: #EB5757;
+}
+
+.header{
+    -fx-font-size: 36;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+.subhead-home{
+    -fx-font-size: 18;
+}
+
+.home-nav-btn{
+    -fx-pref-width: 320;
+
+    -fx-font-size: 34;
+    -fx-font-weight: bold;
+    -fx-alignment: botom-center;
+    -fx-background-radius: 12;
+    -fx-padding:  12 12 0 12;
+}
+
+.font-yellow{
+    -fx-text-fill: #FFC901;
+}
+
+.font-white{
+    -fx-text-fill: #FFFFFF;
+}
+
+.font-blue{
+    -fx-text-fill: #1B607B;
+}
+
+.btn{
+     -fx-padding: 12 24;
+     -fx-background-radius: 8;
+     -fx-font-size: 14;
+     -fx-text-fill: #FFFFFF;
+     -fx-font-weight: bold;
+     -fx-alignment: center;
+}
