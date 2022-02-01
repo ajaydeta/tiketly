@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../css/kasir.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.kasirController.RiwayatTransaksi">
+   <styleClass>
+      <String fx:value="base" />
+      <String fx:value="bg-primary" />
+   </styleClass>
+   <children>
+      <AnchorPane prefHeight="84.0" prefWidth="1280.0">
+         <children>
+            <Button layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#backHome" styleClass="bg-transparent">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../../assets/icon/kasir/caret-left.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="87.0" layoutY="16.0" text="Riwayat Transaksi">
+               <styleClass>
+                  <String fx:value="base-header-text" />
+                  <String fx:value="font-yellow" />
+               </styleClass>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="64.0" prefWidth="1280.0">
+         <children>
+            <Button layoutX="36.0" layoutY="5.0" mnemonicParsing="false" onAction="#openFilter" text="Filter Riwayat">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="bg-yellow" />
+               </styleClass>
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@../../assets/icon/Settings-adjust.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <padding>
+            <Insets bottom="24.0" left="38.0" right="38.0" />
+         </padding>
+         <children>
+            <TableView prefHeight="548.0" prefWidth="774.0" HBox.hgrow="ALWAYS">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+            <AnchorPane prefHeight="548.0" prefWidth="389.0">
+               <children>
+                  <Label layoutX="20.0" text="Detail Transaksi">
+                     <styleClass>
+                        <String fx:value="detail-header-text" />
+                        <String fx:value="font-white" />
+                     </styleClass>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="72.0" text="Judul Film">
+                     <styleClass>
+                        <String fx:value="detail-title" />
+                        <String fx:value="font-yellow" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="judulFilm" layoutX="20.0" layoutY="100.0" prefHeight="45.0" prefWidth="368.0" text="Sepiderman Homeless" wrapText="true">
+                     <styleClass>
+                        <String fx:value="detail-value" />
+                        <String fx:value="font-white" />
+                     </styleClass>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="153.0" text="Teater">
+                     <styleClass>
+                        <String fx:value="detail-title" />
+                        <String fx:value="font-yellow" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="teater" layoutX="20.0" layoutY="181.0" prefHeight="45.0" prefWidth="349.0" text="Teater 1" wrapText="true">
+                     <styleClass>
+                        <String fx:value="detail-value" />
+                        <String fx:value="font-white" />
+                     </styleClass>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="228.0" text="Nomor Kursi">
+                     <styleClass>
+                        <String fx:value="detail-title" />
+                        <String fx:value="font-yellow" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="noKursi" layoutX="20.0" layoutY="256.0" prefHeight="45.0" prefWidth="349.0" text="Teater 1" wrapText="true">
+                     <styleClass>
+                        <String fx:value="detail-value" />
+                        <String fx:value="font-white" />
+                     </styleClass>
+                  </Label>
+                  <Label layoutX="20.0" layoutY="311.0" text="Total Bayar">
+                     <styleClass>
+                        <String fx:value="detail-title" />
+                        <String fx:value="font-yellow" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="totalBayar" layoutX="20.0" layoutY="339.0" prefHeight="45.0" prefWidth="349.0" text="Teater 1" wrapText="true">
+                     <styleClass>
+                        <String fx:value="detail-value" />
+                        <String fx:value="font-white" />
+                     </styleClass>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</VBox>

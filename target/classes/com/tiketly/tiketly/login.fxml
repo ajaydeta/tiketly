@@ -49,7 +49,7 @@
             </PasswordField>
             <Label layoutX="103.0" layoutY="301.0" styleClass="lable-input" text="Gambar apakah hewan dibawah?" />
             <ImageView fx:id="capchaImage" fitHeight="131.0" fitWidth="177.0" layoutX="103.0" layoutY="345.0" pickOnBounds="true" preserveRatio="true" styleClass="image-capcha" />
-            <TextField fx:id="capchaText" layoutX="289.0" layoutY="345.0" promptText="Kuda">
+            <TextField fx:id="capchaText" layoutX="289.0" layoutY="345.0" promptText="Nama hewan di gambar">
                <styleClass>
                   <String fx:value="field-input" />
                   <String fx:value="field-input-small" />

@@ -11,6 +11,7 @@ public class Routes {
 //    ROUTE V2
 //    private static final String baseViewUrl = "src/main/resources/com/tiketly/tiketly/views/";
 
+//    Admin
     public void toKelolaBioskop(ActionEvent actionEvent) throws IOException {
          String viewPath = "admin/kelolaBioskop";
         navHelper.navigate(actionEvent, viewPath);
@@ -28,10 +29,23 @@ public class Routes {
         navHelper.navigate(actionEvent, "admin/kelolaKasir");
     }
 
-
     public void toPembelian(ActionEvent actionEvent) throws IOException {
         navHelper.navigate(actionEvent, "admin/pembelian");
     }
+
+//    Kasir
+    public void toHome(ActionEvent actionEvent) throws IOException {
+        navHelper.navigate(actionEvent, "kasir/home");
+    }
+
+    public void toBuatTransaksi(ActionEvent actionEvent) throws IOException {
+        navHelper.navigate(actionEvent, "kasir/buatTransaksi");
+    }
+
+    public void toRiwayatTransaksi(ActionEvent actionEvent) throws IOException {
+        navHelper.navigate(actionEvent, "kasir/riwayatTransaksi");
+    }
+
 
 //    ROUTE V1
     public void toJadwal(ActionEvent actionEvent) throws IOException {
