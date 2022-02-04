@@ -22,7 +22,7 @@ public class Routes {
     }
 
     public void toKelolaJadwal(ActionEvent actionEvent) throws IOException {
-        navHelper.navigate(actionEvent, "admin/kelolaJadwal");
+        navHelper.navigate(actionEvent, "admin/jadwalFilm");
     }
 
     public void toKelolaKasir(ActionEvent actionEvent) throws IOException {

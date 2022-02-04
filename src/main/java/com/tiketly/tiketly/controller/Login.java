@@ -41,7 +41,7 @@ public class Login implements Initializable {
         database.where("hapus = ?", 0);
 
         System.out.println("user :" + username);
-        Map<String, String> userData = database.getMapResult();
+        Map<String, Object> userData = database.getOneMapResult();
         System.out.println(userData);
 
 
@@ -69,7 +69,7 @@ public class Login implements Initializable {
         routes.toJadwal(actionEvent);
     }
 
-    private String isValid(Map<String, String> elements, String pass) throws InterruptedException {
+    private String isValid(Map<String, Object> elements, String pass) throws InterruptedException {
         if (elements.isEmpty()){
             return "no telpon tidak terdaftar!!";
         }

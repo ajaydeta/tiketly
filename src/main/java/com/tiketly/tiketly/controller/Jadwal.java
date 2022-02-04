@@ -58,7 +58,7 @@ public class Jadwal implements Initializable {
         Helper helper = new Helper();
         DataTravel dataTravel = DataTravel.getInstance();
         Map<String, String> data = dataTravel.getData();
-        Map<String, String> session = null;
+        Map<String, Object> session = null;
         try {
             session = helper.jsonStringToMap(data.get("session"));
         } catch (JsonProcessingException e) {

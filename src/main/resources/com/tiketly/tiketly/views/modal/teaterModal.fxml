@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="988.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.adminController.KelolaBioskop">
+<AnchorPane prefHeight="650.0" prefWidth="988.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.modalController.TeaterModal">
    <children>
       <VBox prefHeight="650.0" prefWidth="988.0">
          <children>

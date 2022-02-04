@@ -59,11 +59,14 @@
             <Insets bottom="24.0" left="38.0" right="38.0" />
          </padding>
          <children>
-            <TableView prefHeight="548.0" prefWidth="774.0" HBox.hgrow="ALWAYS">
+            <TableView fx:id="tableRiwayat" prefHeight="548.0" prefWidth="774.0" HBox.hgrow="ALWAYS">
               <columns>
                 <TableColumn prefWidth="75.0" text="C1" />
                 <TableColumn prefWidth="75.0" text="C2" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
             <AnchorPane prefHeight="548.0" prefWidth="389.0">
                <children>

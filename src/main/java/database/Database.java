@@ -3,12 +3,7 @@ package database;
 import java.sql.*;
 import java.util.*;
 
-public class Database {
-    private String tableFrom, tableName;
-    private ArrayList<String> where = new ArrayList<>();
-    private ArrayList<String> select = new ArrayList<>();
-
-
+public class Database extends QueryBuilder {
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
         return DriverManager.getConnection(
@@ -52,79 +47,87 @@ public class Database {
         return db.prepareStatement(sql.toString());
     }
 
-    public void select(String... selectStr){
-        if (selectStr.length == 0){
-            this.select.add("*");
-        } else {
-            this.select.addAll(Arrays.asList(selectStr));
-        }
-    }
-
-    public void table(String tableName){
-        this.tableName = tableName;
-        this.tableFrom = "FROM `" + tableName + "` ";
-    }
-
-    public void where(String wh, Object... val){
-        int endIndex;
-        for (Object o : val) {
+    public int insert(String tableName, Map<String, Object> data) throws SQLException, ClassNotFoundException {
+        Connection db = getConnection();
+        ArrayList<String> keyList = new ArrayList<>();
+        data.forEach((key, val) -> {
+            keyList.add(key);
+        });
+        String colNameJoined = String.join(", ", keyList);
+        StringBuilder sql = new StringBuilder("INSERT INTO " + tableName + "(" + colNameJoined + ") VALUES (");
+        for (int i = 0; i < keyList.size(); i++) {
             String valStr = "";
-            if ("java.lang.String".equals(o.getClass().getName())) {
+            Object value = data.get(keyList.get(i));
+            if ("java.lang.String".equals(value.getClass().getName())) {
                 StringBuilder str = new StringBuilder();
                 str.appendCodePoint(34);
-                str.append(o);
+                str.append(value);
                 str.appendCodePoint(34);
                 valStr += str.toString();
             } else {
-                valStr += o;
+                valStr += value;
             }
 
-            endIndex = wh.indexOf("?");
-            if (endIndex != wh.length()) {
-                endIndex += 1;
-            }
-            String whSub = wh.substring(0, endIndex);
-            wh = whSub.replace("?", valStr) + wh.substring(endIndex);
+            sql.append(valStr).append(i+1 != keyList.size() ? ", " : "");
         }
+        sql.append(");");
+        System.out.println("Executing SQL: "+sql);
+        PreparedStatement preparedStatement = db.prepareStatement(sql.toString());
+        return preparedStatement.executeUpdate();
 
-        this.where.add("("+ wh + ")");
     }
 
-    public String getQueryString(){
-        String queryStr = "SELECT " + String.join(", ", this.select) + " " + this.tableFrom;
-        if (this.where.toArray().length > 0) {
-            queryStr += "WHERE " + String.join(" AND ", this.where);
-        }
-        return queryStr;
-    }
-
-    public ResultSet getResultSet() throws SQLException, ClassNotFoundException {
+    public ResultSet getResultSet(boolean isOne) throws SQLException, ClassNotFoundException {
         Connection db = getConnection();
-        System.out.println("Executing SQL: "+ getQueryString());
+        if (isOne){
+            limit(1);
+        }
         return db.prepareStatement(getQueryString()).executeQuery();
     }
 
-    public Map<String, String> getMapResult() throws SQLException, ClassNotFoundException {
-        ResultSet rs = getResultSet();
+    public Map<String, Object> getOneMapResult() throws SQLException, ClassNotFoundException {
+        ResultSet rs = getResultSet(true);
         ArrayList<String> columnName = new ArrayList<>();
-        if (!Objects.equals(this.select.get(0), "*")){
-            for (int i = 0; i < this.select.toArray().length; i++) {
-                columnName.add(this.select.get(i));
-            }
-        } else {
-            columnName = getColumn();
+
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnCount = rsmd.getColumnCount();
+
+        for (int i = 1; i <= columnCount; i++ ) {
+            String name = rsmd.getColumnName(i);
+            columnName.add(name);
         }
 
-        Map<String, String> elements = new HashMap<>();
-       System.out.println("column name: " + columnName);
+        Map<String, Object> elements = new HashMap<>();
        while (rs.next()){
-           System.out.println(rs);
-           for (int i = 0; i < columnName.toArray().length; i++) {
-            elements.put(columnName.get(i), rs.getString(columnName.get(i)));
+           for (String s : columnName) {
+               elements.put(s, rs.getObject(s));
            }
         }
 
        return elements;
+    }
+
+    public ArrayList<Map<String, Object>> getArrayMapResult() throws SQLException, ClassNotFoundException {
+        ResultSet rs = getResultSet(false);
+        ArrayList<String> columnName = new ArrayList<>();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnCount = rsmd.getColumnCount();
+
+        for (int i = 1; i <= columnCount; i++ ) {
+            String name = rsmd.getColumnName(i);
+            columnName.add(name);
+        }
+
+        ArrayList<Map<String, Object>> result = new ArrayList<>();
+        while (rs.next()){
+            Map<String, Object> elements = new HashMap<>();
+            for (String s : columnName) {
+                elements.put(s, rs.getObject(s));
+            }
+            result.add(elements);
+        }
+
+        return result;
     }
 
 }

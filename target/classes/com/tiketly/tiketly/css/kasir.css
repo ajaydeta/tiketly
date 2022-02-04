@@ -26,6 +26,9 @@
     -fx-font-weight: bold;
 }
 
+.detail-checkbox{
+    -fx-font-size: 14;
+}
 
 .bg-primary{
     -fx-background-color: #1B607B;
@@ -58,7 +61,7 @@
 
     -fx-font-size: 34;
     -fx-font-weight: bold;
-    -fx-alignment: botom-center;
+    -fx-alignment: BOTTOM_CENTER;
     -fx-background-radius: 12;
     -fx-padding:  12 12 0 12;
 }
@@ -82,4 +85,26 @@
      -fx-text-fill: #FFFFFF;
      -fx-font-weight: bold;
      -fx-alignment: center;
+}
+
+.modal-header{
+    -fx-background-color: #1B607B;
+    -fx-background-radius:  0 0 12 12;
+}
+
+.table-view {
+    -fx-background-color:white;
+    -fx-fill: white;
+}
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color: #FFF89A;
+}
+
+.table-view .column-header .label{
+    -fx-font-size: 14;
+    -fx-text-fill:  #1B607B;
+    -fx-font-weight: bold;
 }
