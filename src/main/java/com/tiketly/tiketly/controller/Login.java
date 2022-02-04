@@ -45,7 +45,7 @@ public class Login implements Initializable {
         System.out.println(userData);
 
 
-        Map<String, String> elements = new HashMap<>();
+        Map<String, Object> elements = new HashMap<>();
         elements.put("session", helper.mapToJson(userData));
 
         String invalidMessage = isValid(userData, pass);

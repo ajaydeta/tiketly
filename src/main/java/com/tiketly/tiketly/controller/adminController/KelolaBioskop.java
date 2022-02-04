@@ -1,6 +1,7 @@
 package com.tiketly.tiketly.controller.adminController;
 
 import database.Database;
+import helper.DataTravel;
 import helper.Navigation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,6 +17,8 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class KelolaBioskop extends AdminBase implements Initializable {
+    DataTravel dataTravel = DataTravel.getInstance();
+
     public TableView<TableBioskopItem> tableBioskop;
     public ChoiceBox<String> filterProvinsi;
     public ChoiceBox<String> filterKota;
@@ -40,7 +43,6 @@ public class KelolaBioskop extends AdminBase implements Initializable {
         ArrayList<Map<String, Object>> provinsiResult = null;
 
         btnLihatTeater.setVisible(false);
-
 
         database.select();
         database.table("provinsi");
@@ -103,7 +105,6 @@ public class KelolaBioskop extends AdminBase implements Initializable {
             return;
         }
 
-
         Database database = new Database();
         Map<String, Object> data = new HashMap<>();
         data.put("idprovinsi", idProvinsi);
@@ -135,7 +136,8 @@ public class KelolaBioskop extends AdminBase implements Initializable {
     }
 
     public void lihatTeater(ActionEvent actionEvent) throws IOException {
-        System.out.println("idBioskop ster: "+idBioskop.getText());
+        dataTravel.addData("idBioskop", idBioskopInt);
+
         Navigation navigation = new Navigation();
         navigation.showModal(actionEvent, "Data Teater", 988, 650,"teaterModal");
     }
@@ -152,12 +154,6 @@ public class KelolaBioskop extends AdminBase implements Initializable {
         this.idKotaFilter = 0;
 
         setValueTableBioskop();
-    }
-
-    public void deleteBioskop(ActionEvent actionEvent) {
-    }
-
-    public void simpanTeater(ActionEvent actionEvent) {
     }
 
     private void setKota(int idprovinsi, ChoiceBox<String> child, EventHandler<ActionEvent> eventHandler) throws SQLException, ClassNotFoundException {

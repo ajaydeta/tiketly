@@ -57,10 +57,10 @@ public class Jadwal implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Helper helper = new Helper();
         DataTravel dataTravel = DataTravel.getInstance();
-        Map<String, String> data = dataTravel.getData();
+        Map<String, Object> data = dataTravel.getData();
         Map<String, Object> session = null;
         try {
-            session = helper.jsonStringToMap(data.get("session"));
+            session = helper.jsonStringToMap((String) data.get("session"));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
