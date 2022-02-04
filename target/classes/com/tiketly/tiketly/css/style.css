@@ -101,6 +101,10 @@
     -fx-background-color: transparent;
 }
 
+.btn-red{
+    -fx-background-color: #EB5757;
+}
+
 .btn{
      -fx-padding: 12 24;
      -fx-background-radius: 8;

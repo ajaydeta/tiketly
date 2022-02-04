@@ -4,15 +4,15 @@ import java.sql.*;
 import java.util.*;
 
 public class Database extends QueryBuilder {
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/tiketly?parseTime=True&loc=Local&characterEncoding=utf8",
-                "root",
-                ""
-        );
-//        return DriverManager.getConnection("jdbc:mysql://localhost:3306/tiketly", )
-    }
+//    public Connection getConnection() throws ClassNotFoundException, SQLException {
+//        Class.forName("com.mysql.jdbc.Driver");
+//        return DriverManager.getConnection(
+//                "jdbc:mysql://localhost:3306/tiketly?parseTime=True&loc=Local&characterEncoding=utf8",
+//                "root",
+//                ""
+//        );
+////        return DriverManager.getConnection("jdbc:mysql://localhost:3306/tiketly", )
+//    }
 
     public ArrayList<String> getColumn() throws SQLException, ClassNotFoundException {
         Connection db =  getConnection();

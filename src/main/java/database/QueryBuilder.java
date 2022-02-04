@@ -1,7 +1,13 @@
 package database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class QueryBuilder {
     protected String tableFrom, tableName, orderBy = "";
@@ -10,6 +16,16 @@ public class QueryBuilder {
     protected ArrayList<String> select = new ArrayList<>();
     protected ArrayList<String> join = new ArrayList<>();
     protected ArrayList<String> groupBy = new ArrayList<>();
+
+    public Connection getConnection() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        return DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/tiketly?parseTime=True&loc=Local&characterEncoding=utf8",
+                "root",
+                ""
+        );
+//        return DriverManager.getConnection("jdbc:mysql://localhost:3306/tiketly", )
+    }
 
     public void select(String... selectStr){
         this.select.clear();
@@ -119,5 +135,57 @@ public class QueryBuilder {
 
         System.out.println("Executing SQL: "+queryStr);
         return queryStr;
+    }
+
+    public int update(String fieldName, Object value) throws SQLException, ClassNotFoundException {
+        Connection db = getConnection();
+        String queryStr = "UPDATE ";
+        queryStr += this.tableName;
+        queryStr += " SET " + fieldName + " = ";
+        if ("java.lang.String".equals(value.getClass().getName())) {
+            StringBuilder str = new StringBuilder();
+            str.appendCodePoint(34);
+            str.append(value);
+            str.appendCodePoint(34);
+            queryStr += str.toString();
+        } else {
+            queryStr += value;
+        }
+
+        if (this.where.size() > 0) {
+            queryStr += " WHERE " + String.join(" AND ", this.where);
+        }
+
+        System.out.println("Executing SQL: "+queryStr);
+        PreparedStatement preparedStatement = db.prepareStatement(queryStr);
+        return preparedStatement.executeUpdate();
+    }
+
+    public int updates(Map<String, Object> data) throws SQLException, ClassNotFoundException {
+        Connection db = getConnection();
+        StringBuilder sql = new StringBuilder("UPDATE " + tableName + " SET ");
+
+        AtomicInteger i = new AtomicInteger(1);
+        data.forEach((key, val) -> {
+            String valStr = "";
+            if ("java.lang.String".equals(val.getClass().getName())) {
+                StringBuilder str = new StringBuilder();
+                str.appendCodePoint(34);
+                str.append(val);
+                str.appendCodePoint(34);
+                valStr += str.toString();
+            } else {
+                valStr += val;
+            }
+            sql.append(key).append(" = ").append(valStr).append(i.get() != data.size() ? ", " : "");
+            i.getAndIncrement();
+        });
+
+        if (this.where.size() > 0) {
+            sql.append(" WHERE ").append(String.join(" AND ", this.where));
+        }
+        PreparedStatement preparedStatement = db.prepareStatement(sql.toString());
+        System.out.println("Executing SQL: "+sql);
+        return preparedStatement.executeUpdate();
     }
 }
