@@ -3,7 +3,11 @@ package helper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 public class Helper {
@@ -40,5 +44,11 @@ public class Helper {
             hewanName = hewan[randomInt(0, 3)];
         }
         return hewanName;
+    }
+
+    public String formatDateTimeFull(Timestamp t){
+        Locale locale = new Locale("id", "ID");
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", locale );
+        return  simpleDateFormat.format(t);
     }
 }

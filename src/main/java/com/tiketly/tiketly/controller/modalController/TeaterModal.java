@@ -2,7 +2,7 @@ package com.tiketly.tiketly.controller.modalController;
 
 import com.tiketly.tiketly.controller.adminController.KelolaBioskop;
 import database.Database;
-import helper.DataTravel;
+import util.DataTravel;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,7 +11,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import model.TableBioskopItem;
 import model.TableTeaterItem;
 
 import java.net.URL;

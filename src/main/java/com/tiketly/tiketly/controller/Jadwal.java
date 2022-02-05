@@ -1,28 +1,17 @@
 package com.tiketly.tiketly.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import helper.DataTravel;
+import util.DataTravel;
 import helper.Helper;
-import helper.Navigation;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import routes.Routes;
 
-import javax.swing.text.AbstractDocument;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;

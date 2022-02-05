@@ -1,7 +1,7 @@
 package com.tiketly.tiketly.controller;
 
 import database.Database;
-import helper.DataTravel;
+import util.DataTravel;
 import helper.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
