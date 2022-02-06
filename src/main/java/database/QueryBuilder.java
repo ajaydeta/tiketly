@@ -17,16 +17,6 @@ public class QueryBuilder {
     protected ArrayList<String> join = new ArrayList<>();
     protected ArrayList<String> groupBy = new ArrayList<>();
 
-    public Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/tiketly?parseTime=True&loc=Local&characterEncoding=utf8",
-                "root",
-                ""
-        );
-//        return DriverManager.getConnection("jdbc:mysql://localhost:3306/tiketly", )
-    }
-
     public void select(String... selectStr){
         this.select.clear();
         if (selectStr.length == 0){
@@ -102,7 +92,7 @@ public class QueryBuilder {
         this.orderBy = order;
     }
 
-    public String getQueryString(){
+    public String getQuerySelect(){
         String queryStr = "SELECT ";
 
         if (this.select.size() > 0){
@@ -137,8 +127,7 @@ public class QueryBuilder {
         return queryStr;
     }
 
-    public int update(String fieldName, Object value) throws SQLException, ClassNotFoundException {
-        Connection db = getConnection();
+    public String getQueryUpdate(String fieldName, Object value){
         String queryStr = "UPDATE ";
         queryStr += this.tableName;
         queryStr += " SET " + fieldName + " = ";
@@ -156,13 +145,10 @@ public class QueryBuilder {
             queryStr += " WHERE " + String.join(" AND ", this.where);
         }
 
-        System.out.println("Executing SQL: "+queryStr);
-        PreparedStatement preparedStatement = db.prepareStatement(queryStr);
-        return preparedStatement.executeUpdate();
+        return queryStr;
     }
 
-    public int updates(Map<String, Object> data) throws SQLException, ClassNotFoundException {
-        Connection db = getConnection();
+    public String getQueryUpdates(Map<String, Object> data){
         StringBuilder sql = new StringBuilder("UPDATE " + tableName + " SET ");
 
         AtomicInteger i = new AtomicInteger(1);
@@ -184,8 +170,61 @@ public class QueryBuilder {
         if (this.where.size() > 0) {
             sql.append(" WHERE ").append(String.join(" AND ", this.where));
         }
-        PreparedStatement preparedStatement = db.prepareStatement(sql.toString());
-        System.out.println("Executing SQL: "+sql);
-        return preparedStatement.executeUpdate();
+        return sql.toString();
+    }
+
+    public String getQueryInsert(String tableName, Map<String, Object> data){
+        ArrayList<String> keyList = new ArrayList<>();
+        data.forEach((key, val) -> {
+            keyList.add(key);
+        });
+        String colNameJoined = String.join(", ", keyList);
+        StringBuilder sql = new StringBuilder("INSERT INTO " + tableName + "(" + colNameJoined + ") VALUES (");
+        for (int i = 0; i < keyList.size(); i++) {
+            String valStr = "";
+            Object value = data.get(keyList.get(i));
+            if ("java.lang.String".equals(value.getClass().getName())) {
+                StringBuilder str = new StringBuilder();
+                str.appendCodePoint(34);
+                str.append(value);
+                str.appendCodePoint(34);
+                valStr += str.toString();
+            } else {
+                valStr += value;
+            }
+
+            sql.append(valStr).append(i+1 != keyList.size() ? ", " : "");
+        }
+        sql.append(");");
+        return sql.toString();
+    }
+
+    public String geQuerytBulkInsert(String tableName, ArrayList<Map<String, Object>> data){
+        ArrayList<String> keyList = new ArrayList<>();
+        data.get(0).forEach((key, val) -> {
+            keyList.add(key);
+        });
+        String colNameJoined = String.join(", ", keyList);
+        StringBuilder sql = new StringBuilder("INSERT INTO " + tableName + "(" + colNameJoined + ") VALUES ");
+        for (int i = 0; i < data.size(); i++) {
+            sql.append("(");
+            for (int j = 0; j < keyList.size(); j++) {
+                String valStr = "";
+                Object value = data.get(i).get(keyList.get(j));
+                if ("java.lang.String".equals(value.getClass().getName())) {
+                    StringBuilder str = new StringBuilder();
+                    str.appendCodePoint(34);
+                    str.append(value);
+                    str.appendCodePoint(34);
+                    valStr += str.toString();
+                } else {
+                    valStr += value;
+                }
+
+                sql.append(valStr).append(j+1 != keyList.size() ? ", " : "");
+            }
+            sql.append(i+1 != data.size() ? "), " : ")");
+        }
+        return sql.toString();
     }
 }

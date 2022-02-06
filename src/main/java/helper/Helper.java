@@ -51,4 +51,29 @@ public class Helper {
         SimpleDateFormat simpleDateFormat =new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", locale );
         return  simpleDateFormat.format(t);
     }
+
+    public String getNamaKursiTeater(int baris, int kolom){
+        StringBuilder nama = new StringBuilder();
+        nama.appendCodePoint(baris + 64);
+        nama.append(kolom);
+        return nama.toString();
+    }
+
+    public int getStatusKursiInt(String status){
+        switch (status){
+            case "Tersedia": return 1;
+            case "Dipesan": return 2;
+            case "Rusak": return 3;
+            default: return 0;
+        }
+    }
+
+    public String getStatusKursiString(int status){
+        switch (status){
+            case 1: return "Tersedia";
+            case 2: return "Dipesan";
+            case 3: return "Rusak";
+            default: return "";
+        }
+    }
 }

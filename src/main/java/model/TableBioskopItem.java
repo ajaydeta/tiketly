@@ -1,10 +1,12 @@
 package model;
 
+
 public class TableBioskopItem {
     private String nama, provinsi, kota;
-    private int no, idBioskop, jumlahTeater;
+    private int no, idBioskop;
+    private long jumlahTeater;
 
-    public TableBioskopItem(String nama, String provinsi, String kota, int idBioskop, int jumlahTeater, int no) {
+    public TableBioskopItem(String nama, String provinsi, String kota, int idBioskop, long jumlahTeater, int no) {
         this.nama = nama;
         this.provinsi = provinsi;
         this.kota = kota;
@@ -18,7 +20,7 @@ public class TableBioskopItem {
         return idBioskop;
     }
 
-    public int getJumlahTeater() {
+    public long getJumlahTeater() {
         return jumlahTeater;
     }
 

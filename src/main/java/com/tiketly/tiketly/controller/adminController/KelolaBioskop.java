@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import model.TableBioskopItem;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
@@ -187,7 +189,7 @@ public class KelolaBioskop extends AdminBase implements Initializable {
         idKota = 0;
     }
 
-    private void setValueTableBioskop() throws SQLException, ClassNotFoundException {
+    protected void setValueTableBioskop() throws SQLException, ClassNotFoundException {
         TableColumn<TableBioskopItem, String> noCol = new TableColumn<>("No");
         noCol.setCellValueFactory(new PropertyValueFactory<>("no"));
 
@@ -222,7 +224,7 @@ public class KelolaBioskop extends AdminBase implements Initializable {
         }
 
         database.table("bioskop");
-        database.select("`bioskop`.*", "provinsi.nama as nama_provinsi", "kota.nama as nama_kota", "SUM(teater.idteater) as jumlah_teater");
+        database.select("`bioskop`.*", "provinsi.nama as nama_provinsi", "kota.nama as nama_kota", "COUNT(teater.idteater) as jumlah_teater");
         database.join("LEFT JOIN provinsi ON `bioskop`.idprovinsi = provinsi.idprovinsi");
         database.join("LEFT JOIN kota ON `kota`.idprovinsi = `bioskop`.idprovinsi AND kota.idkota = `bioskop`.idkota");
         database.join("LEFT JOIN teater ON teater.idbioskop = `bioskop`.idbioskop AND teater.hapus = 0");
@@ -233,9 +235,9 @@ public class KelolaBioskop extends AdminBase implements Initializable {
         for (int i = 0; i < bioskopResult.size(); i++) {
             Map<String, Object> bioskop = bioskopResult.get(i);
             int idbioskopInt = (int) bioskop.get("idbioskop");
-            int jumlahTeater = 0;
+            long jumlahTeater = 0;
             if (bioskop.get("jumlah_teater") != null){
-                jumlahTeater = (int) bioskop.get("jumlah_teater");
+                jumlahTeater = (long) bioskop.get("jumlah_teater");
             }
             tableBioskop.getItems().add(
                     new TableBioskopItem(
@@ -250,7 +252,7 @@ public class KelolaBioskop extends AdminBase implements Initializable {
         }
     }
 
-    public void selectItemTable(MouseEvent mouseEvent) {
+    public void selectItemTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
         if (mouseEvent.getClickCount() == 2)
         {
             TableBioskopItem tableItem = tableBioskop.getSelectionModel().getSelectedItem();
