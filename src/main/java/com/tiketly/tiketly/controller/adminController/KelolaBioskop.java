@@ -1,6 +1,7 @@
 package com.tiketly.tiketly.controller.adminController;
 
 import database.Database;
+import helper.Helper;
 import util.DataTravel;
 import helper.Navigation;
 import javafx.event.ActionEvent;
@@ -19,7 +20,8 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class KelolaBioskop extends AdminBase implements Initializable {
-    DataTravel dataTravel = DataTravel.getInstance();
+//    DataTravel dataTravel = DataTravel.getInstance();
+    Helper helper = new Helper();
 
     public TableView<TableBioskopItem> tableBioskop;
     public ChoiceBox<String> filterProvinsi;
@@ -66,8 +68,8 @@ public class KelolaBioskop extends AdminBase implements Initializable {
             idProvinsi = selectedIndex;
             try {
                 setKota(selectedIndex, kotaBioskop, (eventChild) -> {
-                    if (!getKotaId(kotaBioskop.getValue()).equals("")){
-                        idKota = Integer.parseInt(getKotaId(kotaBioskop.getValue()));
+                    if (!helper.getIdDalamKurung(kotaBioskop.getValue()).equals("")){
+                        idKota = Integer.parseInt(helper.getIdDalamKurung(kotaBioskop.getValue()));
                     }
                 });
             } catch (SQLException | ClassNotFoundException e) {
@@ -80,8 +82,8 @@ public class KelolaBioskop extends AdminBase implements Initializable {
             idProvinsiFilter = selectedIndex;
             try {
                 setKota(selectedIndex, filterKota, (eventChild) -> {
-                    if (!getKotaId(filterKota.getValue()).equals("")){
-                        idKotaFilter = Integer.parseInt(getKotaId(filterKota.getValue()));
+                    if (!helper.getIdDalamKurung(filterKota.getValue()).equals("")){
+                        idKotaFilter = Integer.parseInt(helper.getIdDalamKurung(filterKota.getValue()));
                     }
                 });
             } catch (SQLException | ClassNotFoundException e) {
@@ -171,13 +173,6 @@ public class KelolaBioskop extends AdminBase implements Initializable {
         }
         child.setOnAction(eventHandler);
 
-    }
-
-    private String getKotaId(String rawVal){
-        if (rawVal != null){
-            return rawVal.substring(rawVal.indexOf("(") + 1, rawVal.indexOf(")"));
-        }
-        return "";
     }
 
     private void clearField(){

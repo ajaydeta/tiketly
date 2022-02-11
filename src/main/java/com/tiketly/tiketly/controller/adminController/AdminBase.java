@@ -5,6 +5,7 @@ import helper.Helper;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import routes.Routes;
+import util.DataTravel;
 
 import java.io.IOException;
 
@@ -18,6 +19,7 @@ public class AdminBase {
 
     Routes routes = new Routes();
     Helper helper = new Helper();
+    DataTravel dataTravel = DataTravel.getInstance();
 
     public void kelolaKasir(ActionEvent actionEvent) throws IOException {
         routes.toKelolaKasir(actionEvent);

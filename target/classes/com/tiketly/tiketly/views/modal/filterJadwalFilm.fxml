@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0" styleClass="modal-filter-base-width" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.adminController.JadwalFilm">
+<VBox fx:id="filterJadwalModal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="600.0" styleClass="modal-filter-base-width" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.modalController.FilterJadwalModal">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <styleClass>
@@ -38,10 +38,16 @@
                </font>
             </Label>
             <TextField fx:id="hargaMax" layoutX="169.0" layoutY="281.0" prefWidth="112.0" promptText="20000" styleClass="content-input-customWidth" />
-            <Button layoutX="35.0" layoutY="342.0" mnemonicParsing="false" onAction="#useFilter" text="Terapkan Filter">
+            <Button layoutX="35.0" layoutY="342.0" mnemonicParsing="false" onAction="#useFilter" text="Terapkan">
                <styleClass>
                   <String fx:value="btn" />
                   <String fx:value="btn-yellow" />
+               </styleClass>
+            </Button>
+            <Button fx:id="btnResetFilter" layoutX="157.0" layoutY="342.0" mnemonicParsing="false" onAction="#resetFilter" text="Reset">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="btn-red" />
                </styleClass>
             </Button>
          </children>

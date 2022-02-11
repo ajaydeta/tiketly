@@ -16,6 +16,15 @@ public class Database extends QueryBuilder {
 //        return DriverManager.getConnection("jdbc:mysql://localhost:3306/tiketly", )
     }
 
+    public boolean ping() throws SQLException, ClassNotFoundException {
+        try {
+            getConnection().prepareStatement("SELECT 1 FROM `user`").executeQuery();
+            return true;
+        } catch (SQLException | ClassNotFoundException e){
+            return false;
+        }
+    }
+
     public ArrayList<String> getColumn() throws SQLException, ClassNotFoundException {
         Connection db =  getConnection();
         PreparedStatement stmt = db.prepareStatement(

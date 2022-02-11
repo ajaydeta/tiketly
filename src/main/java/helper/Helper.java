@@ -52,6 +52,12 @@ public class Helper {
         return  simpleDateFormat.format(t);
     }
 
+    public String formatDateSlash(Timestamp t){
+        Locale locale = new Locale("id", "ID");
+        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("M/d/yyyy", locale );
+        return  simpleDateFormat.format(t);
+    }
+
     public String getNamaKursiTeater(int baris, int kolom){
         StringBuilder nama = new StringBuilder();
         nama.appendCodePoint(baris + 64);
@@ -75,5 +81,16 @@ public class Helper {
             case 3: return "Rusak";
             default: return "";
         }
+    }
+
+    public String getIdDalamKurung(String rawVal){
+        if (rawVal != null){
+            return rawVal.substring(rawVal.indexOf("(") + 1, rawVal.indexOf(")"));
+        }
+        return "";
+    }
+
+    public String setIdDalamKurung(Object val, Object id){
+        return val.toString() + " ("+id+")";
     }
 }

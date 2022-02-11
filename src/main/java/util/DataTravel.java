@@ -30,4 +30,8 @@ public final class DataTravel {
     public Map<String, Object> getData() {
         return data;
     }
+
+    public boolean contains(String key){
+        return this.data.containsKey(key);
+    }
 }

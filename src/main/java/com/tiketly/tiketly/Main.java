@@ -14,8 +14,15 @@ import java.sql.SQLException;
 
 public class Main extends Application {
     @Override
-    public void start(Stage stage) throws IOException {
-        URL url = Paths.get("src/main/resources/com/tiketly/tiketly/views/admin/kelolaKasir.fxml").toUri().toURL();
+    public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
+        URL url = null;
+        Database db = new Database();
+        if (db.ping()){
+            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/admin/jadwalFilm.fxml").toUri().toURL();
+        } else {
+            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/alerterror.fxml").toUri().toURL();
+        }
+
         FXMLLoader fxmlLoader = new FXMLLoader(url);
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
 //        stage.setFullScreen(true);

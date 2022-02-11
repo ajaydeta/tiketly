@@ -183,7 +183,7 @@ public class QueryBuilder {
         for (int i = 0; i < keyList.size(); i++) {
             String valStr = "";
             Object value = data.get(keyList.get(i));
-            if ("java.lang.String".equals(value.getClass().getName())) {
+            if ("java.lang.String".equals(value.getClass().getName()) || "java.lang.LocalDate".equals(value.getClass().getName())) {
                 StringBuilder str = new StringBuilder();
                 str.appendCodePoint(34);
                 str.append(value);
@@ -211,7 +211,7 @@ public class QueryBuilder {
             for (int j = 0; j < keyList.size(); j++) {
                 String valStr = "";
                 Object value = data.get(i).get(keyList.get(j));
-                if ("java.lang.String".equals(value.getClass().getName())) {
+                if ("java.lang.String".equals(value.getClass().getName()) || "java.lang.LocalDate".equals(value.getClass().getName())) {
                     StringBuilder str = new StringBuilder();
                     str.appendCodePoint(34);
                     str.append(value);
