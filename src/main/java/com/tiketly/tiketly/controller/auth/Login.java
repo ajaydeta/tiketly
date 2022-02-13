@@ -9,17 +9,20 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import routes.Routes;
+import util.DataTravel;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 public class Login implements Initializable {
     Helper helper = new Helper();
-    Database database = new Database();
 
     public Button masukBtn;
     public TextField idKasir;
@@ -29,19 +32,35 @@ public class Login implements Initializable {
     private String capchaImageNameOld;
     private String capchaImageName = "";
     private int loginAttempt = 1;
+    private Map<String, Object> userData = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setCapchaImage();
     }
 
-    public void btnMasuk(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    public void btnMasuk(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
         String id = idKasir.getText();
         String pass = password.getText();
         String capcha = capchaText.getText();
 
         if (validateInput(id, pass, capcha)){
-
+            Routes routes = new Routes();
+            DataTravel dataTravel = DataTravel.getInstance();
+            dataTravel.addData("SESSION", this.userData);
+            if ((Integer) this.userData.get("role") == 1){
+                routes.toKelolaKasir(actionEvent);
+            } else{
+                routes.toHome(actionEvent);
+            }
+        } else {
+            loginAttempt++;
+            if (loginAttempt > 3){
+                Database database = new Database();
+                database.table("user");
+                database.where("iduser = ?", id);
+                database.update("blokir", 1);
+            }
         }
 
 
@@ -49,7 +68,6 @@ public class Login implements Initializable {
         if (capchaText.getText().equals(capchaImageName)) {
             System.out.println(capchaImageName);
         } else {
-            loginAttempt++;
             capchaImageNameOld = capchaImageName;
             setCapchaImage();
         }
@@ -83,14 +101,21 @@ public class Login implements Initializable {
             return false;
         }
 
+        if (!capcha.toLowerCase().equals(capchaImageName)){
+            return false;
+        }
+
+        Database database = new Database();
         database.select();
         database.table("user");
         database.where("iduser = ?", id);
-        database.where("blokir = ?", 0);
         database.where("hapus = ?", 0);
-        Map<String, Object> userData = database.getOneMapResult();
-        System.out.println(userData);
+        this.userData = database.getOneMapResult();
 
-        return true;
+        if ((boolean) this.userData.get("blokir")){
+            return false;
+        }
+
+        return pass.equals(this.userData.get("password"));
     }
 }
