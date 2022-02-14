@@ -53,32 +53,62 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
         }
 
         statusKursi.getItems().add("Tersedia");
-        statusKursi.getItems().add("Dipesan");
         statusKursi.getItems().add("Rusak");
         statusKursi.setOnAction((event) -> {
             this.statusKursiInt = helper.getStatusKursiInt(statusKursi.getValue());
         });
 
         btnHapusTeater.setVisible(false);
+        inputBarisKolom.setVisible(true);
+        updateKursi.setVisible(false);
+
     }
 
     public void deleteBioskop(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
         Database db = new Database();
         db.table("bioskop");
         db.where("idbioskop = ?", dataTravel.getData("idBioskop"));
-       if (db.update("hapus", 1) > 0){
-           Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-           stage.close();
-           Routes routes = new Routes();
-           routes.toKelolaBioskop(actionEvent);
-       }
+        if (db.update("hapus", 1) > 0) {
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+            Routes routes = new Routes();
+            routes.toKelolaBioskop(actionEvent);
+        }
     }
 
     public void simpanTeater(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         insertTeater();
     }
 
-    public void hapusTeater(ActionEvent actionEvent) {
+    public void hapusTeater(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        Database database = new Database();
+        Connection conn = database.getConnection();
+        try {
+            conn.setAutoCommit(false);
+            Database db1 = new Database();
+            db1.table("teater");
+            db1.where("idteater = ?", Integer.parseInt(idTeater.getText()));
+            if ((Integer) database.execute(conn, db1.getQueryUpdate("hapus", 1)) > 0) {
+                Database db2 = new Database();
+                db2.table("kursi_teater");
+                db2.where("idteater = ?", Integer.parseInt(idTeater.getText()));
+                if ((Integer)database.execute(conn, db1.getQueryUpdate("hapus", 1)) > 0){
+                    btnHapusTeater.setVisible(false);
+                    clearField();
+                    setValueTableTeater();
+                }
+            }
+
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                System.err.print("Transaction is being rolled back");
+                conn.rollback();
+            } catch (SQLException excep) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void insertTeater() throws SQLException, ClassNotFoundException {
@@ -113,7 +143,7 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
                     kursiTeaterInsertData.add(kursiTeater);
                 }
             }
-            if ((int) db.execute(conn, qb.geQuerytBulkInsert("kursi_teater", kursiTeaterInsertData)) > 0){
+            if ((int) db.execute(conn, qb.geQuerytBulkInsert("kursi_teater", kursiTeaterInsertData)) > 0) {
                 btnHapusTeater.setVisible(false);
                 clearField();
                 setValueTableTeater();
@@ -162,15 +192,7 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
             int baris = (int) teater.get("baris");
             int kolom = (int) teater.get("kolom");
 
-            tableTeater.getItems().add(
-                    new TableTeaterItem(
-                            i + 1,
-                            idteaterInt,
-                            baris,
-                            kolom,
-                            (String) teater.get("nama")
-                    )
-            );
+            tableTeater.getItems().add(new TableTeaterItem(i + 1, idteaterInt, baris, kolom, (String) teater.get("nama")));
         }
     }
 
@@ -197,7 +219,7 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
     }
 
     private void setKursiChoiceBox(int idTeater) throws SQLException, ClassNotFoundException {
-        Map<String, Integer> kursiStatus = new HashMap<>();
+        Map<String, Boolean> kursiStatus = new HashMap<>();
 
         Database database = new Database();
         database.table("kursi_teater");
@@ -206,13 +228,13 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
         database.where("hapus = 0");
         ArrayList<Map<String, Object>> kursiTeaterResult = database.getArrayMapResult();
         namaKursi.getItems().clear();
-        for(Map<String, Object> kursiTeater : kursiTeaterResult){
+        for (Map<String, Object> kursiTeater : kursiTeaterResult) {
             namaKursi.getItems().add((String) kursiTeater.get("nama"));
-            kursiStatus.put((String) kursiTeater.get("nama"), (int) kursiTeater.get("status"));
+            kursiStatus.put((String) kursiTeater.get("nama"), (boolean) kursiTeater.get("hapus"));
         }
 
         namaKursi.setOnAction((event) -> {
-            statusKursi.setValue(helper.getStatusKursiString(kursiStatus.get(namaKursi.getValue())));
+            statusKursi.setValue(kursiStatus.get(namaKursi.getValue()) ? "Rusak" : "Tersedia");
         });
 
     }

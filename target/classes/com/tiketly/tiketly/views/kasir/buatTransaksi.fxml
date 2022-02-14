@@ -85,12 +85,30 @@
                         <String fx:value="font-yellow" />
                      </styleClass>
                   </Label>
-                  <Label fx:id="noKursi" layoutX="20.0" layoutY="256.0" prefHeight="45.0" prefWidth="349.0" text="Teater 1" wrapText="true">
-                     <styleClass>
-                        <String fx:value="detail-value" />
-                        <String fx:value="font-white" />
-                     </styleClass>
-                  </Label>
+                  <HBox layoutX="20.0" layoutY="256.0">
+                     <children>
+                        <Label fx:id="noKursi" prefHeight="45.0" prefWidth="310.0" text="Teater 1" wrapText="true" HBox.hgrow="ALWAYS">
+                           <styleClass>
+                              <String fx:value="detail-value" />
+                              <String fx:value="font-white" />
+                           </styleClass>
+                        </Label>
+                        <Button fx:id="pilihKursiSml" mnemonicParsing="false" onAction="#pilihKursi" visible="false">
+                           <styleClass>
+                              <String fx:value="btn" />
+                              <String fx:value="btn-no-padding" />
+                              <String fx:value="bg-yellow" />
+                           </styleClass>
+                           <graphic>
+                              <ImageView>
+                                 <image>
+                                    <Image url="@../../assets/icon/kasir/Plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
                   <Label layoutX="20.0" layoutY="311.0" text="Total Bayar">
                      <styleClass>
                         <String fx:value="detail-title" />
@@ -103,19 +121,19 @@
                         <String fx:value="font-white" />
                      </styleClass>
                   </Label>
-                  <Button layoutX="20.0" layoutY="434.0" mnemonicParsing="false" onAction="#modalKonfirm" text="Beli Tiket">
+                  <Button fx:id="btnConfirm" layoutX="20.0" layoutY="454.0" mnemonicParsing="false" onAction="#modalKonfirm" text="Beli Tiket">
                      <styleClass>
                         <String fx:value="btn" />
                         <String fx:value="bg-yellow" />
                      </styleClass>
                   </Button>
-                  <Button layoutX="140.0" layoutY="434.0" mnemonicParsing="false" onAction="#batal" text="Batal">
+                  <Button layoutX="140.0" layoutY="454.0" mnemonicParsing="false" onAction="#batal" text="Batal">
                      <styleClass>
                         <String fx:value="btn" />
                         <String fx:value="bg-red" />
                      </styleClass>
                   </Button>
-                  <CheckBox layoutX="20.0" layoutY="406.0" mnemonicParsing="false" onAction="#checkKonfirm" text="Pastikan semua data telah benar">
+                  <CheckBox fx:id="checkKonfirmBox" layoutX="20.0" layoutY="426.0" mnemonicParsing="false" onAction="#checkKonfirm" text="Pastikan semua data telah benar">
                      <styleClass>
                         <String fx:value="detail-checkbox" />
                         <String fx:value="font-white" />
@@ -134,6 +152,13 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Label fx:id="keteranganHarga" layoutX="20.0" layoutY="380.0" text="* Harga dari 0 kursi terpilih">
+                     <styleClass>
+                        <String fx:value="label" />
+                        <String fx:value="font-yellow" />
+                        <String fx:value="font-white" />
+                     </styleClass>
+                  </Label>
                </children>
             </AnchorPane>
          </children>

@@ -4,13 +4,13 @@ import database.Database;
 import helper.Helper;
 import helper.Navigation;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.TableJadwalItem;
 import util.DataTravel;
 
@@ -26,6 +26,10 @@ import java.util.ResourceBundle;
 
 public class BuatTransaksi extends KasirBase implements Initializable {
     public Button btnPilihKursi;
+    public Button btnConfirm;
+    public CheckBox checkKonfirmBox;
+    public Button pilihKursiSml;
+    public Label keteranganHarga;
     Navigation navigationHelper = new Navigation();
     DataTravel dataTravel = DataTravel.getInstance();
 
@@ -35,11 +39,12 @@ public class BuatTransaksi extends KasirBase implements Initializable {
     public Label totalBayar;
     public TableView<TableJadwalItem> tableJadwal;
     private Map<String, Object> session = new HashMap<>();
+    private Boolean btnConfirmIsDisable = true;
+    private float hargaTiket = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startStage();
-
         try {
 //            FOR DEVELOPMENT PURPOSE
             Database database = new Database();
@@ -59,9 +64,12 @@ public class BuatTransaksi extends KasirBase implements Initializable {
     }
 
     public void checkKonfirm(ActionEvent actionEvent) {
+        this.btnConfirmIsDisable = !this.btnConfirmIsDisable;
+        btnConfirm.setDisable(this.btnConfirmIsDisable);
     }
 
     public void batal(ActionEvent actionEvent) {
+        dataTravel.deleteData("kursiSelected");
     }
 
     public void modalKonfirm(ActionEvent actionEvent) {
@@ -76,12 +84,32 @@ public class BuatTransaksi extends KasirBase implements Initializable {
         int jumlahBaris = (Integer) teaterResult.get("baris");
 
         int width = jumlahKolom * 70 + (jumlahKolom * 10);
-        int height = jumlahBaris * 70 + (jumlahBaris * 10);
+        int height = jumlahBaris * 60 + (jumlahBaris * 10) + 110;
 
-        System.out.println("width "+width);
-        System.out.println("height "+height);
+        System.out.println("width " + width);
+        System.out.println("height " + height);
 
-        navigationHelper.showModal(actionEvent, "Pilih Kursi", width, height, "pilihKursi");
+        Stage modalStage = navigationHelper.showModalGetStage(actionEvent, "Pilih Kursi", width, height, "pilihKursi");
+        modalStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                ArrayList<String> kursiSelected = (ArrayList<String>) dataTravel.getData("kursiSelected");
+                if (kursiSelected.size() > 0) {
+                    noKursi.setText(String.join(", ", kursiSelected));
+                    pilihKursiSml.setVisible(true);
+                    btnPilihKursi.setVisible(false);
+                    totalBayar.setText(String.valueOf(hargaTiket * kursiSelected.size()));
+
+                    keteranganHarga.setVisible(true);
+                    keteranganHarga.setText("* Harga untuk "+kursiSelected.size()+" kursi terpilih");
+                } else {
+                    pilihKursiSml.setVisible(false);
+                    btnPilihKursi.setVisible(true);
+                    keteranganHarga.setVisible(false);
+                }
+                System.out.println("kursi selected: " + dataTravel.getData("kursiSelected"));
+            }
+        });
+        modalStage.showAndWait();
     }
 
     private void setTableJadwal() throws SQLException, ClassNotFoundException {
@@ -140,18 +168,21 @@ public class BuatTransaksi extends KasirBase implements Initializable {
 
     }
 
-    private void startStage(){
+    private void startStage() {
         judulFilm.setText("Belum dipilih");
         teater.setText("Belum dipilih");
         noKursi.setText("");
         totalBayar.setText("Belum dipilih");
         btnPilihKursi.setDisable(true);
         dataTravel.deleteData("idteater");
+        btnConfirm.setDisable(this.btnConfirmIsDisable);
+        checkKonfirmBox.setSelected(false);
+        keteranganHarga.setVisible(false);
+        pilihKursiSml.setVisible(false);
     }
 
     public void selectItemTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
-        if (mouseEvent.getClickCount() == 2)
-        {
+        if (mouseEvent.getClickCount() == 2) {
             TableJadwalItem tableItem = tableJadwal.getSelectionModel().getSelectedItem();
 
             judulFilm.setText(tableItem.getJudul());
@@ -159,9 +190,17 @@ public class BuatTransaksi extends KasirBase implements Initializable {
             totalBayar.setText("0.0");
             btnPilihKursi.setDisable(false);
 
+            dataTravel.addData("idjadwal", tableItem.getIdjadwal());
             dataTravel.addData("idteater", tableItem.getIdteater());
-        } else if (mouseEvent.getClickCount() == 1){
+
+            hargaTiket = tableItem.getHarga();
+        } else if (mouseEvent.getClickCount() == 1) {
             startStage();
+            dataTravel.deleteData("idjadwal");
+            dataTravel.deleteData("idteater");
+            dataTravel.deleteData("kursiSelected");
+            btnPilihKursi.setVisible(true);
+            keteranganHarga.setVisible(false);
         }
     }
 }

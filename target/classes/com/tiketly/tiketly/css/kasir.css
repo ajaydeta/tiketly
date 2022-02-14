@@ -87,6 +87,10 @@
      -fx-alignment: center;
 }
 
+.btn-no-padding{
+     -fx-padding: 0;
+}
+
 .modal-header{
     -fx-background-color: #1B607B;
     -fx-background-radius:  0 0 12 12;
