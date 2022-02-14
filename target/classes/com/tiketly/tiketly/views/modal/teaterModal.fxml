@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -36,30 +40,51 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Label layoutX="712.0" layoutY="55.0" styleClass="content-label" text="Nama *" />
-                  <TextField fx:id="namaTeaterField" layoutX="712.0" layoutY="82.0" promptText="teater 1" styleClass="content-input" />
-                  <Label layoutX="712.0" layoutY="130.0" styleClass="content-label" text="Kursi *" />
-                  <TextField fx:id="barisField" layoutX="712.0" layoutY="157.0" prefWidth="72.0" promptText="baris" styleClass="content-input-short" />
-                  <Label layoutX="772.0" layoutY="159.0" prefHeight="27.0" prefWidth="12.0" text="X">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="kolomField" layoutX="795.0" layoutY="158.0" prefWidth="72.0" promptText="kolom" styleClass="content-input-short" />
-                  <Label layoutX="715.0" layoutY="220.0" styleClass="content-small-label" text="tanda (*) wajib diisi" />
-                  <Button layoutX="715.0" layoutY="244.0" mnemonicParsing="false" onAction="#simpanTeater" text="Simpan Teater">
-                     <styleClass>
-                        <String fx:value="btn" />
-                        <String fx:value="btn-yellow" />
-                     </styleClass>
-                  </Button>
-                  <TextField fx:id="idTeater" editable="false" layoutX="762.0" layoutY="499.0" visible="false" />
-                  <Button fx:id="btnHapusTeater" layoutX="716.0" layoutY="299.0" mnemonicParsing="false" onAction="#hapusTeater" text="Hapus Teater">
-                     <styleClass>
-                        <String fx:value="btn" />
-                        <String fx:value="btn-red" />
-                     </styleClass>
-                  </Button>
+                  <Pane layoutX="702.0" layoutY="30.0" prefHeight="502.0" prefWidth="265.0">
+                     <children>
+                        <Label layoutX="16.0" styleClass="content-label" text="Nama *" />
+                        <TextField fx:id="namaTeaterField" layoutX="16.0" layoutY="24.0" promptText="teater 1" styleClass="content-input" />
+                        <Label layoutX="18.0" layoutY="171.0" styleClass="content-small-label" text="tanda (*) wajib diisi" />
+                        <Label layoutX="18.0" layoutY="73.0" styleClass="content-label" text="Kursi *" />
+                        <TextField fx:id="idTeater" editable="false" visible="false" />
+                        <Button layoutX="16.0" layoutY="197.0" mnemonicParsing="false" onAction="#simpanTeater" text="Simpan Teater">
+                           <styleClass>
+                              <String fx:value="btn" />
+                              <String fx:value="btn-yellow" />
+                           </styleClass>
+                        </Button>
+                        <Button fx:id="btnHapusTeater" layoutX="16.0" layoutY="253.0" mnemonicParsing="false" onAction="#hapusTeater" text="Hapus Teater">
+                           <styleClass>
+                              <String fx:value="btn" />
+                              <String fx:value="btn-red" />
+                           </styleClass>
+                        </Button>
+                        <HBox fx:id="inputBarisKolom" layoutX="18.0" layoutY="103.0" prefHeight="38.0" prefWidth="200.0" visible="false">
+                           <children>
+                              <TextField fx:id="barisField" prefWidth="72.0" promptText="baris" styleClass="content-input-short" />
+                              <Label prefHeight="27.0" prefWidth="12.0" text="X">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="8.0" right="8.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="kolomField" prefWidth="72.0" promptText="kolom" styleClass="content-input-short" />
+                           </children>
+                        </HBox>
+                        <HBox fx:id="updateKursi" layoutX="19.0" layoutY="102.0" prefHeight="38.0" prefWidth="215.0">
+                           <children>
+                              <ChoiceBox fx:id="namaKursi" prefHeight="25.0" prefWidth="82.0" styleClass="content-input-short">
+                                 <HBox.margin>
+                                    <Insets right="12.0" />
+                                 </HBox.margin>
+                              </ChoiceBox>
+                              <ChoiceBox fx:id="statusKursi" layoutX="87.0" layoutY="10.0" prefWidth="150.0" styleClass="content-input-medium" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </Pane>
                </children>
             </AnchorPane>
          </children>

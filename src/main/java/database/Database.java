@@ -13,7 +13,6 @@ public class Database extends QueryBuilder {
                 "root",
                 ""
         );
-//        return DriverManager.getConnection("jdbc:mysql://localhost:3306/tiketly", )
     }
 
     public boolean ping() throws SQLException, ClassNotFoundException {

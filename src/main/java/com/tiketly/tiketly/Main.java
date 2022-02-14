@@ -18,7 +18,8 @@ public class Main extends Application {
         URL url = null;
         Database db = new Database();
         if (db.ping()){
-            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/login.fxml").toUri().toURL();
+            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/kasir/buatTransaksi.fxml").toUri().toURL();
+//            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/admin/kelolaBioskop.fxml").toUri().toURL();
         } else {
             url = Paths.get("src/main/resources/com/tiketly/tiketly/views/alerterror.fxml").toUri().toURL();
         }

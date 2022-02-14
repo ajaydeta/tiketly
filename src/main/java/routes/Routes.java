@@ -2,6 +2,7 @@ package routes;
 
 import helper.Navigation;
 import javafx.event.ActionEvent;
+import util.DataTravel;
 
 import java.io.IOException;
 
@@ -64,6 +65,8 @@ public class Routes {
     }
 
     public void logout(ActionEvent actionEvent) throws IOException {
+        DataTravel dataTravel = DataTravel.getInstance();
+        dataTravel.deleteData("SESSION");
         String viewPath = "./src/main/resources/com/tiketly/tiketly/login.fxml";
         navHelper.navigate(actionEvent, viewPath);
     }

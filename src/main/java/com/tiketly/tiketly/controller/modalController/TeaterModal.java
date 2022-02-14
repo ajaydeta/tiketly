@@ -6,6 +6,7 @@ import database.QueryBuilder;
 import helper.Helper;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import routes.Routes;
@@ -27,10 +28,10 @@ import java.util.ResourceBundle;
 
 public class TeaterModal extends KelolaBioskop implements Initializable {
     public Button btnHapusTeater;
-    public Pane inputBarisKolom;
-    public Pane updateKursi;
     public ChoiceBox<String> namaKursi;
     public ChoiceBox<String> statusKursi;
+    public HBox inputBarisKolom;
+    public HBox updateKursi;
     DataTravel dataTravel = DataTravel.getInstance();
     Helper helper = new Helper();
 
