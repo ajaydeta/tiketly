@@ -143,7 +143,7 @@ public class KelolaBioskop extends AdminBase implements Initializable {
         dataTravel.addData("idBioskop", idBioskopInt);
 
         Navigation navigation = new Navigation();
-        navigation.showModal(actionEvent, "Data Teater", 988, 650,"teaterModal");
+        navigation.showModal(actionEvent, "Data Teater", 988, 650,"teaterModal", true);
     }
 
     public void useFilter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {

@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="1067.0" stylesheets="@../../css/kasir.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.modalController.PilihKursi">
@@ -27,28 +26,15 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
             </GridPane>
-            <HBox>
+            <Button mnemonicParsing="false" onAction="#konfirmasi" text="Konfirmasi Pemilihan Kursi">
+               <styleClass>
+                  <String fx:value="btn" />
+                  <String fx:value="bg-yellow" />
+               </styleClass>
                <VBox.margin>
                   <Insets top="24.0" />
                </VBox.margin>
-               <children>
-                  <Button mnemonicParsing="false" onAction="#konfirmasi" text="Konfirmasi">
-                     <styleClass>
-                        <String fx:value="btn" />
-                        <String fx:value="bg-yellow" />
-                     </styleClass>
-                     <HBox.margin>
-                        <Insets right="12.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#batalPilih" text="Batal">
-                     <styleClass>
-                        <String fx:value="btn" />
-                        <String fx:value="bg-red" />
-                     </styleClass>
-                  </Button>
-               </children>
-            </HBox>
+            </Button>
          </children>
       </VBox>
    </children>

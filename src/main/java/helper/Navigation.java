@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class Navigation extends Helper{
         nodeScene.setRoot(root);
     }
 
-    public void showModal(ActionEvent actionEvent, String modalTitle, int width, int height, String path) throws IOException {
+    public void showModal(ActionEvent actionEvent, String modalTitle, int width, int height, String path, boolean closeButton, EventHandler<WindowEvent>... handler) throws IOException {
         if (!path.endsWith(".fxml")){
             path += ".fxml";
         }
@@ -46,15 +47,33 @@ public class Navigation extends Helper{
         stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow() );
         stage.setTitle(modalTitle);
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                System.out.println("closeee");
-            }
-        });
+        if (!closeButton){
+            stage.initStyle(StageStyle.UNDECORATED);
+        }
 
+        if (handler != null && handler.length > 0){
+            stage.setOnCloseRequest(handler[0]);
+        }
 
         stage.showAndWait();
     }
+
+//    public void showModalWithWindowCloseHandle(ActionEvent actionEvent, String modalTitle, int width, int height, String path, EventHandler<WindowEvent> handler) throws IOException {
+//        if (!path.endsWith(".fxml")){
+//            path += ".fxml";
+//        }
+//
+//        final Stage stage = new Stage();
+//        URL url = Paths.get(baseModalUrl+path).toUri().toURL();
+//        FXMLLoader fxmlLoader = new FXMLLoader(url);
+//
+//        stage.setResizable(false);
+//        stage.setScene(new Scene(fxmlLoader.load(), width, height));
+//        stage.initModality(Modality.WINDOW_MODAL);
+//        stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow() );
+//        stage.setTitle(modalTitle);
+//        stage.setOnCloseRequest();
+//    }
 
     public Stage showModalGetStage(ActionEvent actionEvent, String modalTitle, int width, int height, String path) throws IOException {
         if (!path.endsWith(".fxml")){

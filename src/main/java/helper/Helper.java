@@ -17,6 +17,12 @@ public class Helper {
         return "USR" + date.getTime() + floor;
     }
 
+    public String generateIdTransaksi(){
+        Date date = new Date();
+        int floor = randomInt(1000, 9999);
+        return "TRX" + date.getTime() + floor;
+    }
+
     public String mapToJson(Map<String, Object> map) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(map);

@@ -10,6 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../css/kasir.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.kasirController.BuatTransaksi">
@@ -121,24 +122,6 @@
                         <String fx:value="font-white" />
                      </styleClass>
                   </Label>
-                  <Button fx:id="btnConfirm" layoutX="20.0" layoutY="454.0" mnemonicParsing="false" onAction="#modalKonfirm" text="Beli Tiket">
-                     <styleClass>
-                        <String fx:value="btn" />
-                        <String fx:value="bg-yellow" />
-                     </styleClass>
-                  </Button>
-                  <Button layoutX="140.0" layoutY="454.0" mnemonicParsing="false" onAction="#batal" text="Batal">
-                     <styleClass>
-                        <String fx:value="btn" />
-                        <String fx:value="bg-red" />
-                     </styleClass>
-                  </Button>
-                  <CheckBox fx:id="checkKonfirmBox" layoutX="20.0" layoutY="426.0" mnemonicParsing="false" onAction="#checkKonfirm" text="Pastikan semua data telah benar">
-                     <styleClass>
-                        <String fx:value="detail-checkbox" />
-                        <String fx:value="font-white" />
-                     </styleClass>
-                  </CheckBox>
                   <Button fx:id="btnPilihKursi" layoutX="20.0" layoutY="261.0" mnemonicParsing="false" onAction="#pilihKursi" prefHeight="20.0" prefWidth="143.0" text="Pilih Kursi">
                      <styleClass>
                         <String fx:value="btn" />
@@ -152,13 +135,35 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label fx:id="keteranganHarga" layoutX="20.0" layoutY="380.0" text="* Harga dari 0 kursi terpilih">
+                  <Label fx:id="keteranganHarga" layoutX="20.0" layoutY="380.0" text="* Harga dari 0 kursi terpilih" visible="false">
                      <styleClass>
                         <String fx:value="label" />
                         <String fx:value="font-yellow" />
                         <String fx:value="font-white" />
                      </styleClass>
                   </Label>
+                  <Pane fx:id="transaksiControl" layoutX="20.0" layoutY="426.0">
+                     <children>
+                        <CheckBox fx:id="checkKonfirmBox" mnemonicParsing="false" onAction="#checkKonfirm" text="Pastikan semua data telah benar">
+                           <styleClass>
+                              <String fx:value="detail-checkbox" />
+                              <String fx:value="font-white" />
+                           </styleClass>
+                        </CheckBox>
+                        <Button layoutX="120.0" layoutY="28.0" mnemonicParsing="false" onAction="#batal" text="Batal">
+                           <styleClass>
+                              <String fx:value="btn" />
+                              <String fx:value="bg-red" />
+                           </styleClass>
+                        </Button>
+                        <Button fx:id="btnConfirm" layoutY="28.0" mnemonicParsing="false" onAction="#buatTransaksi" text="Beli Tiket">
+                           <styleClass>
+                              <String fx:value="btn" />
+                              <String fx:value="bg-yellow" />
+                           </styleClass>
+                        </Button>
+                     </children>
+                  </Pane>
                </children>
             </AnchorPane>
          </children>

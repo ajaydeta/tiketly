@@ -79,6 +79,7 @@ public class PilihKursi extends BuatTransaksi implements Initializable {
                         button.setStyle(tersedia);
                     } else {
                         button.setStyle(dipesan);
+                        button.setDisable(true);
                     }
 
                     if ((Boolean) kursi.get("hapus")) {
@@ -95,7 +96,6 @@ public class PilihKursi extends BuatTransaksi implements Initializable {
                         this.kursiSelected.add(namaKursi);
                         button.setStyle(dipilihCustomer);
                     }
-                    System.out.println(this.kursiSelected);
                 });
 
                 gridKursi.add(button, j, i);
@@ -106,16 +106,8 @@ public class PilihKursi extends BuatTransaksi implements Initializable {
 
     public void konfirmasi(ActionEvent actionEvent) {
         dataTravel.addData("kursiSelected", this.kursiSelected);
-        closeModal(actionEvent);
-    }
-
-    public void batalPilih(ActionEvent actionEvent) {
-        this.kursiSelected.clear();
-        closeModal(actionEvent);
-    }
-
-    private void closeModal(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
+
 }

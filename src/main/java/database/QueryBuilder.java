@@ -17,21 +17,21 @@ public class QueryBuilder {
     protected ArrayList<String> join = new ArrayList<>();
     protected ArrayList<String> groupBy = new ArrayList<>();
 
-    public void select(String... selectStr){
+    public void select(String... selectStr) {
         this.select.clear();
-        if (selectStr.length == 0){
+        if (selectStr.length == 0) {
             this.select.add("*");
         } else {
             this.select.addAll(Arrays.asList(selectStr));
         }
     }
 
-    public void table(String tableName){
+    public void table(String tableName) {
         this.tableName = tableName;
         this.tableFrom = "FROM `" + tableName + "` ";
     }
 
-    public void join(String join, Object... val){
+    public void join(String join, Object... val) {
         int endIndex;
         for (Object o : val) {
             String valStr = "";
@@ -55,7 +55,7 @@ public class QueryBuilder {
         this.join.add(join);
     }
 
-    public void where(String wh, Object... val){
+    public void where(String wh, Object... val) {
         int endIndex;
         for (Object o : val) {
             String valStr = "";
@@ -65,6 +65,21 @@ public class QueryBuilder {
                 str.append(o);
                 str.appendCodePoint(34);
                 valStr += str.toString();
+            } else if ("java.util.ArrayList".equals(o.getClass().getName())) {
+                ArrayList<Object> arrayList = (ArrayList<Object>) o;
+                ArrayList<String> valArr = new ArrayList<>();
+                for (Object object : arrayList) {
+                    if ("java.lang.String".equals(object.getClass().getName())) {
+                        StringBuilder str = new StringBuilder();
+                        str.appendCodePoint(34);
+                        str.append(object);
+                        str.appendCodePoint(34);
+                        valArr.add(str.toString());
+                    } else {
+                        valArr.add(object.toString());
+                    }
+                }
+                valStr += String.join(", ", valArr);
             } else {
                 valStr += o;
             }
@@ -77,25 +92,25 @@ public class QueryBuilder {
             wh = whSub.replace("?", valStr) + wh.substring(endIndex);
         }
 
-        this.where.add("("+ wh + ")");
+        this.where.add("(" + wh + ")");
     }
 
-    public void groupBy(String group){
+    public void groupBy(String group) {
         this.groupBy.add(group);
     }
 
-    public void limit(int limit){
+    public void limit(int limit) {
         this.limit = limit;
     }
 
-    public void order(String order){
+    public void order(String order) {
         this.orderBy = order;
     }
 
-    public String getQuerySelect(){
+    public String getQuerySelect() {
         String queryStr = "SELECT ";
 
-        if (this.select.size() > 0){
+        if (this.select.size() > 0) {
             queryStr += String.join(", ", this.select) + " ";
         } else {
             queryStr += " * ";
@@ -103,7 +118,7 @@ public class QueryBuilder {
 
         queryStr += this.tableFrom;
 
-        if (this.join.size() > 0){
+        if (this.join.size() > 0) {
             queryStr += String.join(" ", this.join);
         }
 
@@ -111,23 +126,23 @@ public class QueryBuilder {
             queryStr += " WHERE " + String.join(" AND ", this.where);
         }
 
-        if (this.groupBy.size() > 0){
+        if (this.groupBy.size() > 0) {
             queryStr += " GROUP BY " + String.join(", ", this.groupBy);
         }
 
-        if (!this.orderBy.equals("")){
-            queryStr += " ORDER BY "+this.orderBy;
+        if (!this.orderBy.equals("")) {
+            queryStr += " ORDER BY " + this.orderBy;
         }
 
-        if (this.limit > 0){
+        if (this.limit > 0) {
             queryStr += " LIMIT " + this.limit;
         }
 
-        System.out.println("Executing SQL: "+queryStr);
+        System.out.println("Executing SQL: " + queryStr);
         return queryStr;
     }
 
-    public String getQueryUpdate(String fieldName, Object value){
+    public String getQueryUpdate(String fieldName, Object value) {
         String queryStr = "UPDATE ";
         queryStr += this.tableName;
         queryStr += " SET " + fieldName + " = ";
@@ -148,7 +163,7 @@ public class QueryBuilder {
         return queryStr;
     }
 
-    public String getQueryUpdates(Map<String, Object> data){
+    public String getQueryUpdates(Map<String, Object> data) {
         StringBuilder sql = new StringBuilder("UPDATE " + tableName + " SET ");
 
         AtomicInteger i = new AtomicInteger(1);
@@ -173,7 +188,7 @@ public class QueryBuilder {
         return sql.toString();
     }
 
-    public String getQueryInsert(String tableName, Map<String, Object> data){
+    public String getQueryInsert(String tableName, Map<String, Object> data) {
         ArrayList<String> keyList = new ArrayList<>();
         data.forEach((key, val) -> {
             keyList.add(key);
@@ -193,13 +208,13 @@ public class QueryBuilder {
                 valStr += value;
             }
 
-            sql.append(valStr).append(i+1 != keyList.size() ? ", " : "");
+            sql.append(valStr).append(i + 1 != keyList.size() ? ", " : "");
         }
         sql.append(");");
         return sql.toString();
     }
 
-    public String geQuerytBulkInsert(String tableName, ArrayList<Map<String, Object>> data){
+    public String geQuerytBulkInsert(String tableName, ArrayList<Map<String, Object>> data) {
         ArrayList<String> keyList = new ArrayList<>();
         data.get(0).forEach((key, val) -> {
             keyList.add(key);
@@ -221,9 +236,9 @@ public class QueryBuilder {
                     valStr += value;
                 }
 
-                sql.append(valStr).append(j+1 != keyList.size() ? ", " : "");
+                sql.append(valStr).append(j + 1 != keyList.size() ? ", " : "");
             }
-            sql.append(i+1 != data.size() ? "), " : ")");
+            sql.append(i + 1 != data.size() ? "), " : ")");
         }
         return sql.toString();
     }

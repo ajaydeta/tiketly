@@ -1,24 +1,23 @@
 package com.tiketly.tiketly.controller.kasirController;
 
 import database.Database;
-import helper.Helper;
+import database.QueryBuilder;
 import helper.Navigation;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 import javafx.stage.WindowEvent;
 import model.TableJadwalItem;
 import util.DataTravel;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,17 +29,19 @@ public class BuatTransaksi extends KasirBase implements Initializable {
     public CheckBox checkKonfirmBox;
     public Button pilihKursiSml;
     public Label keteranganHarga;
-    Navigation navigationHelper = new Navigation();
-    DataTravel dataTravel = DataTravel.getInstance();
 
     public Label judulFilm;
     public Label teater;
     public Label noKursi;
     public Label totalBayar;
     public TableView<TableJadwalItem> tableJadwal;
+    public Pane transaksiControl;
+
     private Map<String, Object> session = new HashMap<>();
     private Boolean btnConfirmIsDisable = true;
     private float hargaTiket = 0;
+    Navigation navigationHelper = new Navigation();
+    DataTravel dataTravel = DataTravel.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,10 +70,67 @@ public class BuatTransaksi extends KasirBase implements Initializable {
     }
 
     public void batal(ActionEvent actionEvent) {
+        startStage();
         dataTravel.deleteData("kursiSelected");
     }
 
-    public void modalKonfirm(ActionEvent actionEvent) {
+    public void buatTransaksi(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+        final String idTrx = helper.generateIdTransaksi();
+        Map<String, Object> transaksi = new HashMap<>();
+        transaksi.put("id", idTrx);
+        transaksi.put("idjadwal", dataTravel.getData("idjadwal"));
+        transaksi.put("idbioskop", session.get("idbioskop"));
+        transaksi.put("idkasir", session.get("iduser"));
+        transaksi.put("total_bayar", Float.parseFloat(totalBayar.getText()));
+
+        Database db = new Database();
+        Connection conn = db.getConnection();
+
+        try {
+            conn.setAutoCommit(false);
+
+            QueryBuilder qb = new QueryBuilder();
+            db.execute(conn, qb.getQueryInsert("transaksi", transaksi));
+
+            ArrayList<String> kursiSelected = (ArrayList<String>) dataTravel.getData("kursiSelected");
+            qb.table("kursi_teater");
+            qb.where("idteater = ?", dataTravel.getData("idteater"));
+            qb.where("nama IN (?)", kursiSelected);
+            ArrayList<Map<String, Object>> kursiResult = (ArrayList<Map<String, Object>>) db.execute(conn, qb.getQuerySelect());
+
+            Map<String, Integer> kursiId = new HashMap<>();
+            for (Map<String, Object> kursi : kursiResult) {
+                kursiId.put((String) kursi.get("nama"), (Integer) kursi.get("id"));
+            }
+
+            ArrayList<Map<String, Object>> kursiTransaksi = new ArrayList<>();
+            for (String kursi : kursiSelected){
+                Map<String, Object> insertData = new HashMap<>();
+                insertData.put("idtransaksi", idTrx);
+                insertData.put("idjadwal", dataTravel.getData("idjadwal"));
+                insertData.put("idkursi", kursiId.get(kursi));
+                kursiTransaksi.add(insertData);
+            }
+
+            if ((int) db.execute(conn, qb.geQuerytBulkInsert("transaksi_kursi", kursiTransaksi)) > 0) {
+                btnPilihKursi.setVisible(true);
+                startStage();
+//                setValueTableTeater();
+                System.out.println("berhasill");
+            }
+
+            conn.commit();
+//            conn.rollback();
+        } catch (SQLException e){
+            e.printStackTrace();
+            try {
+                System.err.print("Transaction is being rolled back");
+                conn.rollback();
+            } catch (SQLException excep) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public void pilihKursi(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException {
@@ -89,27 +147,25 @@ public class BuatTransaksi extends KasirBase implements Initializable {
         System.out.println("width " + width);
         System.out.println("height " + height);
 
-        Stage modalStage = navigationHelper.showModalGetStage(actionEvent, "Pilih Kursi", width, height, "pilihKursi");
-        modalStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                ArrayList<String> kursiSelected = (ArrayList<String>) dataTravel.getData("kursiSelected");
-                if (kursiSelected.size() > 0) {
-                    noKursi.setText(String.join(", ", kursiSelected));
-                    pilihKursiSml.setVisible(true);
-                    btnPilihKursi.setVisible(false);
-                    totalBayar.setText(String.valueOf(hargaTiket * kursiSelected.size()));
+        navigationHelper.showModal(actionEvent, "Pilih Kursi", width, height, "pilihKursi", false, this::modalOnCloseHandler);
+    }
 
-                    keteranganHarga.setVisible(true);
-                    keteranganHarga.setText("* Harga untuk "+kursiSelected.size()+" kursi terpilih");
-                } else {
-                    pilihKursiSml.setVisible(false);
-                    btnPilihKursi.setVisible(true);
-                    keteranganHarga.setVisible(false);
-                }
-                System.out.println("kursi selected: " + dataTravel.getData("kursiSelected"));
-            }
-        });
-        modalStage.showAndWait();
+    private void modalOnCloseHandler(WindowEvent we){
+        ArrayList<String> kursiSelected = (ArrayList<String>) dataTravel.getData("kursiSelected");
+        if (kursiSelected.size() > 0) {
+            noKursi.setText(String.join(", ", kursiSelected));
+            pilihKursiSml.setVisible(true);
+            btnPilihKursi.setVisible(false);
+            totalBayar.setText(String.valueOf(hargaTiket * kursiSelected.size()));
+
+            keteranganHarga.setVisible(true);
+            keteranganHarga.setText("* Harga untuk "+kursiSelected.size()+" kursi terpilih");
+        } else {
+            pilihKursiSml.setVisible(false);
+            btnPilihKursi.setVisible(true);
+            keteranganHarga.setVisible(false);
+        }
+        System.out.println("kursi selected: " + dataTravel.getData("kursiSelected"));
     }
 
     private void setTableJadwal() throws SQLException, ClassNotFoundException {
@@ -179,6 +235,7 @@ public class BuatTransaksi extends KasirBase implements Initializable {
         checkKonfirmBox.setSelected(false);
         keteranganHarga.setVisible(false);
         pilihKursiSml.setVisible(false);
+        transaksiControl.setVisible(false);
     }
 
     public void selectItemTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
@@ -194,6 +251,7 @@ public class BuatTransaksi extends KasirBase implements Initializable {
             dataTravel.addData("idteater", tableItem.getIdteater());
 
             hargaTiket = tableItem.getHarga();
+            transaksiControl.setVisible(true);
         } else if (mouseEvent.getClickCount() == 1) {
             startStage();
             dataTravel.deleteData("idjadwal");
