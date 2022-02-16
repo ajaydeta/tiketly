@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="600.0" styleClass="modal-filter-base-width" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.modalController.FilterPembelian">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="403.0" prefWidth="600.0" styleClass="modal-filter-base-width" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.modalController.FilterTransaksiKasir">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <styleClass>
@@ -21,18 +21,16 @@
             <Label layoutX="69.0" layoutY="12.0" styleClass="modal-filter-label-header" text="Filter Pembelian" />
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="295.0" prefWidth="322.0" VBox.vgrow="ALWAYS">
+      <AnchorPane prefHeight="337.0" prefWidth="322.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="35.0" layoutY="14.0" styleClass="content-label" text="Bioskop" />
-            <ComboBox fx:id="filterBioskop" layoutX="35.0" layoutY="41.0" prefWidth="150.0" styleClass="content-input" />
-            <Label layoutX="35.0" layoutY="167.0" styleClass="content-label" text="Periode Pembelian" />
-            <Label layoutX="35.0" layoutY="197.0" styleClass="content-small-label" text="Tanggal Awal" />
-            <DatePicker fx:id="filterTanggalAwal" layoutX="35.0" layoutY="214.0" styleClass="content-input" />
-            <Label layoutX="35.0" layoutY="261.0" styleClass="content-small-label" text="Tanggal Akhir" />
-            <DatePicker fx:id="filterTanggalAkhir" layoutX="35.0" layoutY="278.0" styleClass="content-input" />
-            <Label layoutX="35.0" layoutY="91.0" styleClass="content-label" text="Di buat oleh" />
-            <ComboBox fx:id="filterKasir" layoutX="35.0" layoutY="118.0" prefWidth="150.0" styleClass="content-input" />
-            <HBox layoutX="35.0" layoutY="339.0">
+            <Label layoutX="35.0" layoutY="14.0" styleClass="content-label" text="Teater" />
+            <ComboBox fx:id="filterTeater" layoutX="35.0" layoutY="41.0" prefWidth="150.0" styleClass="content-input" />
+            <Label layoutX="35.0" layoutY="89.0" styleClass="content-label" text="Periode Pembelian" />
+            <Label layoutX="35.0" layoutY="119.0" styleClass="content-small-label" text="Tanggal Awal" />
+            <DatePicker fx:id="filterTanggalAwal" layoutX="35.0" layoutY="136.0" styleClass="content-input" />
+            <Label layoutX="35.0" layoutY="183.0" styleClass="content-small-label" text="Tanggal Akhir" />
+            <DatePicker fx:id="filterTanggalAkhir" layoutX="35.0" layoutY="200.0" styleClass="content-input" />
+            <HBox layoutX="35.0" layoutY="261.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#useFilter" text="Terapkan">
                      <styleClass>

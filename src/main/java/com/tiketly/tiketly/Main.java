@@ -15,11 +15,16 @@ import java.sql.SQLException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException, SQLException, ClassNotFoundException {
+        System.out.println("Tiketly running...");
+        System.out.println("java version: "+System.getProperty("java.version"));
+        System.out.println("javafx.version: " + System.getProperty("javafx.version"));
+
         URL url = null;
         Database db = new Database();
         if (db.ping()){
-//            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/kasir/buatTransaksi.fxml").toUri().toURL();
-            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/admin/pembelian.fxml").toUri().toURL();
+//            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/kasir/riwayatTransaksi.fxml").toUri().toURL();
+//            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/admin/pembelian.fxml").toUri().toURL();
+            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/login.fxml").toUri().toURL();
         } else {
             url = Paths.get("src/main/resources/com/tiketly/tiketly/views/alerterror.fxml").toUri().toURL();
         }
