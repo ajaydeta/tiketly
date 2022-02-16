@@ -147,10 +147,10 @@ public class BuatTransaksi extends KasirBase implements Initializable {
         System.out.println("width " + width);
         System.out.println("height " + height);
 
-        navigationHelper.showModal(actionEvent, "Pilih Kursi", width, height, "pilihKursi", false, this::modalOnCloseHandler);
+        navigationHelper.showModal(actionEvent, "Pilih Kursi", width, height, "pilihKursi", this::modalOnHideHandler, null);
     }
 
-    private void modalOnCloseHandler(WindowEvent we){
+    private void modalOnHideHandler(WindowEvent we){
         ArrayList<String> kursiSelected = (ArrayList<String>) dataTravel.getData("kursiSelected");
         if (kursiSelected.size() > 0) {
             noKursi.setText(String.join(", ", kursiSelected));

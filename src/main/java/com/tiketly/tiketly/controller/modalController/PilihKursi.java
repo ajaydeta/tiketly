@@ -107,7 +107,7 @@ public class PilihKursi extends BuatTransaksi implements Initializable {
     public void konfirmasi(ActionEvent actionEvent) {
         dataTravel.addData("kursiSelected", this.kursiSelected);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+        stage.close();
     }
 
 }

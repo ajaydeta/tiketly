@@ -120,18 +120,16 @@ public class JadwalFilm extends AdminBase implements Initializable {
 
     public void openFilterJadwal(ActionEvent actionEvent) throws IOException {
         Navigation navigation = new Navigation();
-        this.modalStage = navigation.showModalGetStage(actionEvent, "Filter Jadwal Film", 322, 470, "filterJadwalFilm");
-        this.modalStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                System.out.println("modal closedd");
-                try {
-                    setTableJadwal();
-                } catch (SQLException | ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        this.modalStage.showAndWait();
+        navigation.showModal(actionEvent, "Filter Jadwal Film", 322, 470, "filterJadwalFilm", this::onHideHandler, null);
+    }
+
+    private void onHideHandler(WindowEvent we){
+        System.out.println("modal closedd");
+        try {
+            setTableJadwal();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void useFilter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -157,7 +155,8 @@ public class JadwalFilm extends AdminBase implements Initializable {
         }
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+        stage.close();
+//        stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     private void setFilmChoice() throws SQLException, ClassNotFoundException {
