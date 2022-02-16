@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="600.0" styleClass="modal-filter-base-width" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.modalController.FilterPembelian">
@@ -30,12 +32,25 @@
             <DatePicker fx:id="filterTanggalAkhir" layoutX="35.0" layoutY="278.0" styleClass="content-input" />
             <Label layoutX="35.0" layoutY="91.0" styleClass="content-label" text="Di buat oleh" />
             <ComboBox fx:id="filterKasir" layoutX="35.0" layoutY="118.0" prefWidth="150.0" styleClass="content-input" />
-            <Button layoutX="35.0" layoutY="339.0" mnemonicParsing="false" onAction="#useFilter" text="Terapkan Filter">
-               <styleClass>
-                  <String fx:value="btn" />
-                  <String fx:value="btn-yellow" />
-               </styleClass>
-            </Button>
+            <HBox layoutX="35.0" layoutY="339.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#useFilter" text="Terapkan">
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btn-yellow" />
+                     </styleClass>
+                     <HBox.margin>
+                        <Insets right="12.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#reset" text="Reset">
+                     <styleClass>
+                        <String fx:value="btn" />
+                        <String fx:value="btn-red" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </children>

@@ -137,4 +137,17 @@ public class FilterPembelian implements Initializable {
 
     }
 
+    public void reset(ActionEvent actionEvent) {
+        filterKasir.setValue(null);
+        filterBioskop.setValue(null);
+        filterTanggalAwal.setValue(null);
+        filterTanggalAkhir.setValue(null);
+
+        dataTravel.deleteData("filterBioskop");
+        dataTravel.deleteData("filterKasir");
+        dataTravel.deleteData("filterTanggalAkhir");
+        dataTravel.deleteData("filterTanggalAwal");
+        dataTravel.deleteData("filterBioskopRaw");
+        dataTravel.deleteData("filterKasirRaw");
+    }
 }

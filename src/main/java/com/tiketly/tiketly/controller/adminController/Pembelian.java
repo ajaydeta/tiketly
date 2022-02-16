@@ -96,11 +96,11 @@ public class Pembelian extends AdminBase implements Initializable {
         }
 
         if (dataTravel.contains("filterTanggalAkhir")) {
-            database.where("transaksi.created_at <= ?", dataTravel.getData("filterTanggalAkhir"));
+            database.where("transaksi.created_at <= ?", dataTravel.getData("filterTanggalAkhir") + " 23:59:59");
         }
 
         if (dataTravel.contains("filterTanggalAwal")) {
-            database.where("transaksi.created_at >= ?", dataTravel.getData("filterTanggalAwal"));
+            database.where("transaksi.created_at >= ?", dataTravel.getData("filterTanggalAwal") + " 00:00:00");
         }
 
         database.table("transaksi");
