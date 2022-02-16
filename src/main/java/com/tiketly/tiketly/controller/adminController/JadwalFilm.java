@@ -43,7 +43,6 @@ public class JadwalFilm extends AdminBase implements Initializable {
     public TextField hargaMax;
     public TextField idjadwal;
 
-    private Stage modalStage = new Stage();
     private Map<String, Integer> filmIdMap = new HashMap<>();
 
     @Override
