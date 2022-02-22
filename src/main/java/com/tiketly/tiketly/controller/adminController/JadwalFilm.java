@@ -54,6 +54,8 @@ public class JadwalFilm extends AdminBase implements Initializable {
         dataTravel.deleteData("filterTanggalAkhir");
         dataTravel.deleteData("filterTanggalAwal");
 
+        textInputValidate();
+
         try {
             setFilmChoice();
             setBioskopChoice();
@@ -297,7 +299,6 @@ public class JadwalFilm extends AdminBase implements Initializable {
     public void selectItemTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
         if (mouseEvent.getClickCount() == 2)
         {
-//            teater.getItems().clear();
             TableJadwalItem tableItem = tableJadwal.getSelectionModel().getSelectedItem();
 
             bioskop.setValue(helper.setIdDalamKurung(tableItem.getNamaBioskop(), tableItem.getIdbioskop()));
@@ -309,8 +310,18 @@ public class JadwalFilm extends AdminBase implements Initializable {
             idjadwal.setText(Integer.toString(tableItem.getIdjadwal()));
 
         } else if (mouseEvent.getClickCount() == 1){
-//            btnLihatTeater.setVisible(false);
             clearField();
         }
+    }
+
+    private void textInputValidate(){
+        hargaField.textProperty().addListener(((observableValue, oldValue, newValue) -> {
+            hargaField.setText(inputUtil.inputHarga(newValue));
+        }));
+
+        jamTayang.textProperty().addListener(((observableValue, oldValue, newValue) -> {
+            jamTayang.setText(inputUtil.inputJam(oldValue,newValue));
+        }));
+
     }
 }

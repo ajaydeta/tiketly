@@ -12,10 +12,13 @@ public class Routes {
 //    ROUTE V2
 //    private static final String baseViewUrl = "src/main/resources/com/tiketly/tiketly/views/";
 
+    public void toLogin(ActionEvent actionEvent) throws IOException {
+        navHelper.navigate(actionEvent, "login");
+    }
+
 //    Admin
     public void toKelolaBioskop(ActionEvent actionEvent) throws IOException {
-         String viewPath = "admin/kelolaBioskop";
-        navHelper.navigate(actionEvent, viewPath);
+        navHelper.navigate(actionEvent, "admin/kelolaBioskop");
     }
 
     public void toKelolaFilm(ActionEvent actionEvent) throws IOException {

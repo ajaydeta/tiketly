@@ -8,7 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.WindowEvent;
+import model.TableJadwalItem;
 import model.TableTransaksiKasirItem;
 import util.DataTravel;
 
@@ -33,17 +35,14 @@ public class RiwayatTransaksi extends KasirBase implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Database database = new Database();
-        database.select();
-        database.table("user");
-        database.where("iduser = ?", "USR16440334169808891");
-        database.where("hapus = ?", 0);
+        judulFilm.setText("Belum dipilih");
+        teater.setText("Belum dipilih");
+        noKursi.setText("Belum dipilih");
+        totalBayar.setText("Belum dipilih");
 
+        this.session = (Map<String, Object>) dataTravel.getData("SESSION");
         try {
-            this.session = database.getOneMapResult();
-            dataTravel.addData("SESSION", this.session);
             setItemTable();
-
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -128,6 +127,23 @@ public class RiwayatTransaksi extends KasirBase implements Initializable {
                             (long) transaksi.get("jumlah_kursi")
                     )
             );
+        }
+    }
+
+    public void selectItemTable(MouseEvent mouseEvent) throws SQLException, ClassNotFoundException {
+        if (mouseEvent.getClickCount() == 2) {
+            TableTransaksiKasirItem tableItem = tableRiwayat.getSelectionModel().getSelectedItem();
+
+            judulFilm.setText(tableItem.getJudulFilm());
+            teater.setText(tableItem.getTeater());
+            noKursi.setText(tableItem.getJudulFilm());
+            totalBayar.setText(Float.toString(tableItem.getTotal()));
+
+        } else if (mouseEvent.getClickCount() == 1) {
+            judulFilm.setText("Belum dipilih");
+            teater.setText("Belum dipilih");
+            noKursi.setText("Belum dipilih");
+            totalBayar.setText("Belum dipilih");
         }
     }
 }

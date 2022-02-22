@@ -46,18 +46,9 @@ public class BuatTransaksi extends KasirBase implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startStage();
+        this.session = (Map<String, Object>) dataTravel.getData("SESSION");
+
         try {
-//            FOR DEVELOPMENT PURPOSE
-            Database database = new Database();
-            database.select();
-            database.table("user");
-            database.where("iduser = ?", "USR16440334169808891");
-            database.where("hapus = ?", 0);
-
-            this.session = database.getOneMapResult();
-            dataTravel.addData("SESSION", this.session);
-//            this.session = (Map<String, Object>) dataTravel.getData("SESSION");
-
             setTableJadwal();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -104,7 +95,7 @@ public class BuatTransaksi extends KasirBase implements Initializable {
             }
 
             ArrayList<Map<String, Object>> kursiTransaksi = new ArrayList<>();
-            for (String kursi : kursiSelected){
+            for (String kursi : kursiSelected) {
                 Map<String, Object> insertData = new HashMap<>();
                 insertData.put("idtransaksi", idTrx);
                 insertData.put("idjadwal", dataTravel.getData("idjadwal"));
@@ -121,7 +112,7 @@ public class BuatTransaksi extends KasirBase implements Initializable {
 
             conn.commit();
 //            conn.rollback();
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             try {
                 System.err.print("Transaction is being rolled back");
@@ -150,7 +141,7 @@ public class BuatTransaksi extends KasirBase implements Initializable {
         navigationHelper.showModal(actionEvent, "Pilih Kursi", width, height, "pilihKursi", this::modalOnHideHandler, null);
     }
 
-    private void modalOnHideHandler(WindowEvent we){
+    private void modalOnHideHandler(WindowEvent we) {
         ArrayList<String> kursiSelected = (ArrayList<String>) dataTravel.getData("kursiSelected");
         if (kursiSelected.size() > 0) {
             noKursi.setText(String.join(", ", kursiSelected));
@@ -159,7 +150,7 @@ public class BuatTransaksi extends KasirBase implements Initializable {
             totalBayar.setText(String.valueOf(hargaTiket * kursiSelected.size()));
 
             keteranganHarga.setVisible(true);
-            keteranganHarga.setText("* Harga untuk "+kursiSelected.size()+" kursi terpilih");
+            keteranganHarga.setText("* Harga untuk " + kursiSelected.size() + " kursi terpilih");
         } else {
             pilihKursiSml.setVisible(false);
             btnPilihKursi.setVisible(true);

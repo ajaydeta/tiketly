@@ -15,15 +15,15 @@ public final class DataTravel {
         this.data = data;
     }
 
-    public void addData(String key, Object value){
+    public void addData(String key, Object value) {
         this.data.put(key, value);
     }
 
-    public void deleteData(String key){
+    public void deleteData(String key) {
         this.data.remove(key);
     }
 
-    public Object getData(String key){
+    public Object getData(String key) {
         return this.data.get(key);
     }
 
@@ -31,7 +31,11 @@ public final class DataTravel {
         return data;
     }
 
-    public boolean contains(String key){
+    public boolean contains(String key) {
         return this.data.containsKey(key);
+    }
+
+    public void clear() {
+        this.data.clear();
     }
 }

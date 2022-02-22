@@ -33,9 +33,30 @@ public class Login implements Initializable {
     private String capchaImageName = "";
     private int loginAttempt = 1;
     private Map<String, Object> userData = new HashMap<>();
+    private boolean idNotEmpty = false;
+    private boolean passNotEmpty = false;
+    private boolean capchaNotEmpty = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        masukBtn.setDisable(true);
+
+        idKasir.textProperty().addListener((observable, oldValue, newValue) -> {
+            idKasir.setText(newValue.toUpperCase());
+            idNotEmpty = !newValue.equals("");
+            masukBtn.setDisable(!(idNotEmpty && passNotEmpty && capchaNotEmpty));
+        });
+
+        password.textProperty().addListener((observable, oldValue, newValue) -> {
+            passNotEmpty = !newValue.equals("");
+            masukBtn.setDisable(!(idNotEmpty && passNotEmpty && capchaNotEmpty));
+        });
+
+        capchaText.textProperty().addListener((observable, oldValue, newValue) -> {
+            capchaNotEmpty = !newValue.equals("");
+            masukBtn.setDisable(!(idNotEmpty && passNotEmpty && capchaNotEmpty));
+        });
+
         setCapchaImage();
     }
 
@@ -44,18 +65,18 @@ public class Login implements Initializable {
         String pass = password.getText();
         String capcha = capchaText.getText();
 
-        if (validateInput(id, pass, capcha)){
+        if (validateInput(id, pass, capcha)) {
             Routes routes = new Routes();
             DataTravel dataTravel = DataTravel.getInstance();
             dataTravel.addData("SESSION", this.userData);
-            if ((Integer) this.userData.get("role") == 1){
+            if ((Integer) this.userData.get("role") == 1) {
                 routes.toKelolaKasir(actionEvent);
-            } else{
+            } else {
                 routes.toHome(actionEvent);
             }
         } else {
             loginAttempt++;
-            if (loginAttempt > 3){
+            if (loginAttempt > 3) {
                 Database database = new Database();
                 database.table("user");
                 database.where("iduser = ?", id);
@@ -64,7 +85,7 @@ public class Login implements Initializable {
         }
 
 
-        System.out.println("loginAttempt: "+loginAttempt);
+        System.out.println("loginAttempt: " + loginAttempt);
         if (capchaText.getText().equals(capchaImageName)) {
             System.out.println(capchaImageName);
         } else {
@@ -73,11 +94,11 @@ public class Login implements Initializable {
         }
     }
 
-    private void setCapchaImage(){
+    private void setCapchaImage() {
         capchaImageName = helper.getCapcha(capchaImageNameOld);
 
         Image image = null;
-        String full_path = "src/main/resources/com/tiketly/tiketly/assets/capcha/"+capchaImageName+".jpg";
+        String full_path = "src/main/resources/com/tiketly/tiketly/assets/capcha/" + capchaImageName + ".jpg";
         System.out.println(full_path);
         try {
             image = new Image(new FileInputStream(full_path));
@@ -89,19 +110,7 @@ public class Login implements Initializable {
     }
 
     private boolean validateInput(String id, String pass, String capcha) throws SQLException, ClassNotFoundException {
-        if (id.equals("")){
-            return false;
-        }
-
-        if (pass.equals("")){
-            return false;
-        }
-
-        if (capcha.equals("")){
-            return false;
-        }
-
-        if (!capcha.toLowerCase().equals(capchaImageName)){
+        if (!capcha.toLowerCase().equals(capchaImageName)) {
             return false;
         }
 
@@ -112,7 +121,7 @@ public class Login implements Initializable {
         database.where("hapus = ?", 0);
         this.userData = database.getOneMapResult();
 
-        if ((boolean) this.userData.get("blokir")){
+        if ((boolean) this.userData.get("blokir")) {
             return false;
         }
 

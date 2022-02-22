@@ -19,6 +19,7 @@ module com.tiketly.tiketly {
     exports com.tiketly.tiketly.controller.kasirController;
     exports com.tiketly.tiketly.controller.modalController;
     exports com.tiketly.tiketly.controller.auth;
+    exports com.tiketly.tiketly.controller;
     exports helper;
     exports database;
     exports model;

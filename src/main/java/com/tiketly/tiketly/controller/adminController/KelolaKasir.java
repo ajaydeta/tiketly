@@ -36,7 +36,7 @@ public class KelolaKasir extends AdminBase implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startStageView();
-
+        textInputValidate();
         try {
             setBioskopChoice();
             setValueTableKasir();
@@ -237,6 +237,20 @@ public class KelolaKasir extends AdminBase implements Initializable {
         btnHapusKasir.setVisible(false);
         idKasir.setText(helper.generateIdUser());
         labelBioskopForm.setText("Bekerja Di Bioskop *");
+    }
+
+    private void textInputValidate() {
+        telponKasir.textProperty().addListener((observable, oldValue, newValue) -> {
+            telponKasir.setText(this.inputUtil.inputPhone(oldValue, newValue));
+        });
+
+        namaKasir.textProperty().addListener((observable, oldValue, newValue) -> {
+            namaKasir.setText(this.inputUtil.inputNama(newValue));
+        });
+
+        search.textProperty().addListener((observable, oldValue, newValue) -> {
+            search.setText(this.inputUtil.inputSearch(newValue));
+        });
     }
 }
 
