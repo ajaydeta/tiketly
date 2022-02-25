@@ -6,6 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -57,6 +60,15 @@ public class Navigation extends Helper{
         }
 
         stage.show();
+    }
+
+    public void showDialog(String title, String body){
+        Dialog<String> dialog = new Dialog<String>();
+        dialog.setTitle(title);
+        dialog.setContentText(body);
+        ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(type);
+        dialog.showAndWait();
     }
 
 }

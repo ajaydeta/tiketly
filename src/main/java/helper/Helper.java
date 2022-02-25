@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -52,10 +54,9 @@ public class Helper {
         return hewanName;
     }
 
-    public String formatDateTimeFull(Timestamp t){
-        Locale locale = new Locale("id", "ID");
-        SimpleDateFormat simpleDateFormat =new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", locale );
-        return  simpleDateFormat.format(t);
+    public String formatDateTimeFull(LocalDateTime t){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return  t.format(formatter);
     }
 
     public String formatDateSlash(Timestamp t){

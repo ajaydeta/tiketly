@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Database extends QueryBuilder {
     public Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
+//        Class.forName("mysql-connector-java.com.mysql");
         return DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/tiketly?parseTime=True&loc=Local&characterEncoding=utf8",
                 "root",
@@ -81,7 +81,7 @@ public class Database extends QueryBuilder {
         int columnCount = rsmd.getColumnCount();
 
         for (int i = 1; i <= columnCount; i++ ) {
-            String name = rsmd.getColumnName(i);
+            String name = rsmd.getColumnLabel(i);
             columnName.add(name);
         }
 
@@ -103,7 +103,7 @@ public class Database extends QueryBuilder {
         int columnCount = rsmd.getColumnCount();
 
         for (int i = 1; i <= columnCount; i++ ) {
-            String name = rsmd.getColumnName(i);
+            String name = rsmd.getColumnLabel(i);
             columnName.add(name);
         }
 

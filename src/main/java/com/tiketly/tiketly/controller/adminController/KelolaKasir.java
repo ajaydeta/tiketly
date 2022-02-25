@@ -1,6 +1,7 @@
 package com.tiketly.tiketly.controller.adminController;
 
 import database.Database;
+import helper.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -13,6 +14,7 @@ import model.TableKasirItem;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class KelolaKasir extends AdminBase implements Initializable {
@@ -32,6 +34,7 @@ public class KelolaKasir extends AdminBase implements Initializable {
 
     private Map<String, Integer> bioskopIdMap = new HashMap<>();
     private boolean isUpdate;
+    private Navigation navigation = new Navigation();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -72,6 +75,8 @@ public class KelolaKasir extends AdminBase implements Initializable {
             setValueTableKasir();
             clearField();
             startStageView();
+
+            navigation.showDialog("Sukses", "Hapus data kasir telah berhasil");
         }
     }
 
@@ -154,13 +159,18 @@ public class KelolaKasir extends AdminBase implements Initializable {
                       (String) kasir.get("nama"),
                       (String) kasir.get("telp"),
                       (String) kasir.get("nama_bioskop"),
-                      helper.formatDateTimeFull((Timestamp) kasir.get("created_at"))
+                      helper.formatDateTimeFull((LocalDateTime) kasir.get("created_at"))
               )
             );
         }
     }
 
     private void insertKasir() throws SQLException, ClassNotFoundException {
+        if (!validateInputEmpty()){
+            navigation.showDialog("Gagal", "Harap lengkapi form yang dibutuhkan!");
+            return;
+        }
+
         String idKasirStr = idKasir.getText();
         String telponKasirStr = telponKasir.getText();
         String namaKasirStr = namaKasir.getText();
@@ -178,10 +188,17 @@ public class KelolaKasir extends AdminBase implements Initializable {
         if (database.insert("user", insertData) > 0){
             clearField();
             setValueTableKasir();
+
+            navigation.showDialog("Sukses", "Penambahan data kasir telah berhasil");
         }
     }
 
     private void updateKasir() throws SQLException, ClassNotFoundException {
+        if (!validateInputEmpty()){
+            navigation.showDialog("Gagal", "Harap lengkapi form yang dibutuhkan!");
+            return;
+        }
+
         String idKasirStr = idKasir.getText();
         String telponKasirStr = telponKasir.getText();
         String namaKasirStr = namaKasir.getText();
@@ -200,6 +217,8 @@ public class KelolaKasir extends AdminBase implements Initializable {
             clearField();
             setValueTableKasir();
             startStageView();
+
+            navigation.showDialog("Sukses", "Pembaharuan data kasir dengan ID " +idKasirStr+ " telah berhasil.");
         }
     }
 
@@ -251,6 +270,13 @@ public class KelolaKasir extends AdminBase implements Initializable {
         search.textProperty().addListener((observable, oldValue, newValue) -> {
             search.setText(this.inputUtil.inputSearch(newValue));
         });
+    }
+
+    private boolean validateInputEmpty(){
+        return telponKasir.getText() != null && !telponKasir.getText().trim().equals("")
+                && namaKasir.getText() != null && !namaKasir.getText().trim().equals("")
+                && passwordKasir.getText() != null && !passwordKasir.getText().trim().equals("")
+                && bioskopKasir.getValue() != null;
     }
 }
 

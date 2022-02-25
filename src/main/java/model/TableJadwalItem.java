@@ -1,14 +1,15 @@
 package model;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class TableJadwalItem {
     private final int no, idjadwal, idbioskop, idteater;
     private final float harga;
     private final String showAt, judul, namaBioskop, namaTeater;
-    private final Timestamp showAtRaw;
+    private final LocalDateTime showAtRaw;
 
-    public TableJadwalItem(int no, int idjadwal, int idbioskop, int idteater, float harga, String showAt, String judul, String namaBioskop, String namaTeater, Timestamp showAtRaw){
+    public TableJadwalItem(int no, int idjadwal, int idbioskop, int idteater, float harga, String showAt, String judul, String namaBioskop, String namaTeater, LocalDateTime showAtRaw){
         this.no = no;
         this.idjadwal = idjadwal;
         this.idbioskop = idbioskop;
@@ -31,7 +32,7 @@ public class TableJadwalItem {
     public String getNamaBioskop(){ return this.namaBioskop; }
     public String getNamaTeater(){ return this.namaTeater; }
 
-    public Timestamp getShowAtRaw() {
+    public LocalDateTime getShowAtRaw() {
         return showAtRaw;
     }
 }

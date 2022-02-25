@@ -15,6 +15,11 @@
    -fx-text-fill: #FFFFFF;
    -fx-font-weight: bold;
    -fx-alignment: center-left;
+   -fx-cursor: hand;
+}
+
+.side-bar-btn:hover{
+    -fx-text-fill: #FFC901;
 }
 
 .side-bar-btn-active{
@@ -92,9 +97,18 @@
     -fx-background-color: #FFC901;
 }
 
+.btn-yellow:hover{
+    -fx-background-color: #ffde69;
+}
+
 .btn-primary{
     -fx-background-color: #1B607B;
 }
+
+.btn-primary:hover{
+    -fx-background-color: #207191;
+}
+
 
 .btn-transparent{
     -fx-background-color: transparent;
@@ -104,6 +118,10 @@
     -fx-background-color: #EB5757;
 }
 
+.btn-red:hover{
+    -fx-background-color: #e06e6e;
+}
+
 .btn{
      -fx-padding: 12 24;
      -fx-background-radius: 8;
@@ -111,6 +129,8 @@
      -fx-text-fill: #FFFFFF;
      -fx-font-weight: bold;
      -fx-alignment: center;
+
+     -fx-cursor: hand;
 }
 
 .table-view {

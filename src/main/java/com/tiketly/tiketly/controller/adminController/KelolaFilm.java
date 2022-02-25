@@ -63,10 +63,6 @@ public class KelolaFilm extends AdminBase implements Initializable {
     public void selectItemTable(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
             TableFilmItem tableItem = tableFilm.getSelectionModel().getSelectedItem();
-            System.out.println(tableItem.getId());
-            System.out.println(tableItem.getJudul());
-            System.out.println(tableItem.getSinopsis());
-            System.out.println(tableItem.getSensor());
 
             idfilm.setText(Integer.toString(tableItem.getId()));
             judul.setText(tableItem.getJudul());

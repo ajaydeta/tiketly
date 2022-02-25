@@ -7,7 +7,6 @@ module com.tiketly.tiketly {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires java.desktop;
-    requires mysql.connector;
     requires com.fasterxml.jackson.databind;
 
     opens com.tiketly.tiketly to javafx.fxml;

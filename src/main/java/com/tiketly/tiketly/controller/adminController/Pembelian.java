@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -119,7 +120,7 @@ public class Pembelian extends AdminBase implements Initializable {
                             (String) transaksi.get("id"),
                             (String) transaksi.get("judul"),
                             (String) transaksi.get("bioskop"),
-                            helper.formatDateTimeFull((Timestamp) transaksi.get("created_at")),
+                            helper.formatDateTimeFull((LocalDateTime) transaksi.get("created_at")),
                             (String) transaksi.get("kasir"),
                             (float) transaksi.get("total_bayar"),
                             (long) transaksi.get("jumlah_kursi")

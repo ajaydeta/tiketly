@@ -18,6 +18,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -204,11 +205,11 @@ public class BuatTransaksi extends KasirBase implements Initializable {
                             (int) jadwal.get("idbioskop"),
                             (int) jadwal.get("idteater"),
                             (float) jadwal.get("harga"),
-                            this.helper.formatDateTimeFull((Timestamp) jadwal.get("show_at")),
+                            this.helper.formatDateTimeFull((LocalDateTime) jadwal.get("show_at")),
                             (String) jadwal.get("judul_film"),
                             (String) jadwal.get("nama_bioskop"),
                             (String) jadwal.get("nama_teater"),
-                            (Timestamp) jadwal.get("show_at")
+                            (LocalDateTime) jadwal.get("show_at")
                     )
             );
         }

@@ -21,6 +21,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -274,11 +275,11 @@ public class JadwalFilm extends AdminBase implements Initializable {
                             (int) jadwal.get("idbioskop"),
                             (int) jadwal.get("idteater"),
                             (float) jadwal.get("harga"),
-                            helper.formatDateTimeFull((Timestamp) jadwal.get("show_at")),
+                            helper.formatDateTimeFull((LocalDateTime) jadwal.get("show_at")),
                             (String) jadwal.get("judul_film"),
                             (String) jadwal.get("nama_bioskop"),
                             (String) jadwal.get("nama_teater"),
-                            (Timestamp) jadwal.get("show_at")
+                            (LocalDateTime) jadwal.get("show_at")
                     )
             );
         }
@@ -304,8 +305,8 @@ public class JadwalFilm extends AdminBase implements Initializable {
             bioskop.setValue(helper.setIdDalamKurung(tableItem.getNamaBioskop(), tableItem.getIdbioskop()));
             judul.setValue(tableItem.getJudul());
             teater.setValue(helper.setIdDalamKurung(tableItem.getNamaTeater(), tableItem.getIdteater()));
-            tanggalTayang.setValue(tableItem.getShowAtRaw().toLocalDateTime().toLocalDate());
-            jamTayang.setText(tableItem.getShowAtRaw().toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm")));
+            tanggalTayang.setValue(tableItem.getShowAtRaw().toLocalDate());
+            jamTayang.setText(tableItem.getShowAtRaw().format(DateTimeFormatter.ofPattern("HH:mm")));
             hargaField.setText(Float.toString(tableItem.getHarga()));
             idjadwal.setText(Integer.toString(tableItem.getIdjadwal()));
 
