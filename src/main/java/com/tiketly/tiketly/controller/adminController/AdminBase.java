@@ -46,5 +46,8 @@ public class AdminBase {
     }
 
     public void keluar(ActionEvent actionEvent) throws IOException {
+        dataTravel.clear();
+        System.out.println(this.dataTravel.getData());
+        routes.toLogin(actionEvent);
     }
 }

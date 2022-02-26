@@ -1,7 +1,5 @@
 package util;
 
-import java.util.Arrays;
-
 public class InputUtil {
 
     private String regexEmoji(String val) {

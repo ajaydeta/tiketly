@@ -107,12 +107,12 @@ public class BuatTransaksi extends KasirBase implements Initializable {
             if ((int) db.execute(conn, qb.geQuerytBulkInsert("transaksi_kursi", kursiTransaksi)) > 0) {
                 btnPilihKursi.setVisible(true);
                 startStage();
-//                setValueTableTeater();
                 System.out.println("berhasill");
             }
 
             conn.commit();
 //            conn.rollback();
+            navigation.showDialog("Sukses", "Sukses membeli tiket");
         } catch (SQLException e) {
             e.printStackTrace();
             try {

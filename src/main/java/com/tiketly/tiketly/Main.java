@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main extends Application {
@@ -19,7 +18,7 @@ public class Main extends Application {
         System.out.println("java version: " + System.getProperty("java.version"));
         System.out.println("javafx.version: " + System.getProperty("javafx.version"));
 
-        URL url = null;
+        URL url;
         Database db = new Database();
         if (db.ping()) {
 //            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/kasir/riwayatTransaksi.fxml").toUri().toURL();

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="1067.0" stylesheets="@../../css/kasir.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.modalController.PilihKursi">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="1067.0" stylesheets="@../../css/kasir.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.modalController.PilihKursi">
    <children>
       <Button centerShape="false" mnemonicParsing="false" prefHeight="51.0" prefWidth="1090.0" text="Pilih Kursi">
          <styleClass>
@@ -29,7 +29,7 @@
             <Button mnemonicParsing="false" onAction="#konfirmasi" text="Konfirmasi Pemilihan Kursi">
                <styleClass>
                   <String fx:value="btn" />
-                  <String fx:value="bg-yellow" />
+                  <String fx:value="btn-yellow" />
                </styleClass>
                <VBox.margin>
                   <Insets top="24.0" />

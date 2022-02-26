@@ -85,6 +85,31 @@
      -fx-text-fill: #FFFFFF;
      -fx-font-weight: bold;
      -fx-alignment: center;
+     -fx-cursor: hand;
+}
+
+.btn-yellow{
+    -fx-background-color: #FFC901;
+}
+
+.btn-yellow:hover{
+    -fx-background-color: #ffde69;
+}
+
+.btn-primary{
+    -fx-background-color: #1B607B;
+}
+
+.btn-primary:hover{
+    -fx-background-color: #207191;
+}
+
+.btn-red{
+    -fx-background-color: #EB5757;
+}
+
+.btn-red:hover{
+    -fx-background-color: #e06e6e;
 }
 
 .btn-no-padding{
@@ -111,4 +136,8 @@
     -fx-font-size: 14;
     -fx-text-fill:  #1B607B;
     -fx-font-weight: bold;
+}
+
+.back-button{
+    -fx-cursor: hand;
 }
