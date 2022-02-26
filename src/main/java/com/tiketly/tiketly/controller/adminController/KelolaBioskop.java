@@ -91,21 +91,23 @@ public class KelolaBioskop extends AdminBase implements Initializable {
             }
         });
 //            provinsiBioskop.setValue("Sumatera Utara");
+
+        namaBioskop.textProperty().addListener((observable, oldValue, newValue) -> {
+            namaBioskop.setText(this.inputUtil.inputNamaBioskop(newValue));
+        });
     }
 
     public void simapanBioskop(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         if (idBioskop.getText().equals("")){
             insertBioskop();
         } else {
-            System.out.println("updateeeee");
+            updateBioskop();
         }
     }
 
     private void insertBioskop() throws SQLException, ClassNotFoundException {
-        if(namaBioskop.getText().equals("") || idProvinsi == 0 || idKota == 0){
-            System.out.println("idprovinsi: "+ idProvinsi);
-            System.out.println("idkota: "+ idKota);
-            System.out.println("nama: "+ namaBioskop.getText());
+        if (validateInputEmpty()){
+            navigation.showDialog("Gagal", "Harap lengkapi form yang dibutuhkan!");
             return;
         }
 
@@ -116,25 +118,33 @@ public class KelolaBioskop extends AdminBase implements Initializable {
         data.put("nama", namaBioskop.getText());
 
         if (database.insert("bioskop", data) > 0) {
-            database.table("bioskop");
-            database.where("hapus = 0");
-            database.order("created_at DESC");
-            Map<String, Object> bioskopData = database.getOneMapResult();
-
-            int tableItemsSize = tableBioskop.getItems().size();
-            tableBioskop.getItems().add(
-                    new TableBioskopItem(
-                            (String) bioskopData.get("nama"),
-                            provinsiBioskop.getValue(),
-                            kotaBioskop.getValue(),
-                            (int) bioskopData.get("idbioskop"),
-                            0,
-                            tableItemsSize+1
-                    )
-            );
-
+            setValueTableBioskop();
             clearField();
-            System.out.println("sukses");
+            navigation.showDialog("Sukses", "Penambahan data bioskop telah berhasil");
+        }
+
+    }
+
+    private void updateBioskop() throws SQLException, ClassNotFoundException {
+        if (validateInputEmpty()){
+            navigation.showDialog("Gagal", "Harap lengkapi form yang dibutuhkan!");
+            return;
+        }
+
+        Database database = new Database();
+        database.table("bioskop");
+        database.where("idbioskop = ?", idBioskop.getText());
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("idprovinsi", idProvinsi);
+        data.put("idkota", idKota);
+        data.put("nama", namaBioskop.getText());
+
+        if (database.updates(data) > 0) {
+            setValueTableBioskop();
+            clearField();
+            btnLihatTeater.setVisible(false);
+            navigation.showDialog("Sukses", "Pembaharuan data bioskop telah berhasil");
         }
 
     }
@@ -267,5 +277,12 @@ public class KelolaBioskop extends AdminBase implements Initializable {
             btnLihatTeater.setVisible(false);
             clearField();
         }
+    }
+
+    private boolean validateInputEmpty(){
+        return namaBioskop.getText() == null ||
+                namaBioskop.getText().trim().equals("") ||
+                provinsiBioskop.getValue() == null ||
+                kotaBioskop.getValue() == null;
     }
 }

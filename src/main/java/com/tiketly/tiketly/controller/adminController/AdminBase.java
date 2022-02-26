@@ -2,6 +2,7 @@ package com.tiketly.tiketly.controller.adminController;
 
 import database.Database;
 import helper.Helper;
+import helper.Navigation;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import routes.Routes;
@@ -22,6 +23,7 @@ public class AdminBase {
     Helper helper = new Helper();
     DataTravel dataTravel = DataTravel.getInstance();
     InputUtil inputUtil = new InputUtil();
+    Navigation navigation = new Navigation();
 
     public void kelolaKasir(ActionEvent actionEvent) throws IOException {
         routes.toKelolaKasir(actionEvent);

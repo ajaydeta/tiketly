@@ -12,6 +12,10 @@ public class InputUtil {
         return newValue.replaceAll("[^A-Za-z\\s]", "");
     }
 
+    public String inputNamaBioskop(String newValue) {
+        return newValue.replaceAll("[^A-Za-z0-9\\s]", "");
+    }
+
     public String inputPhone(String oldValue, String newValue) {
         String newVal = newValue.replaceAll("[^\\d]", "");
         if (!newVal.matches("^\\d{0,14}$")) {

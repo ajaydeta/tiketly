@@ -6,14 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
-import model.TableBioskopItem;
 import model.TableKasirItem;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -34,7 +31,7 @@ public class KelolaKasir extends AdminBase implements Initializable {
 
     private Map<String, Integer> bioskopIdMap = new HashMap<>();
     private boolean isUpdate;
-    private Navigation navigation = new Navigation();
+//    private Navigation navigation = new Navigation();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -166,7 +163,7 @@ public class KelolaKasir extends AdminBase implements Initializable {
     }
 
     private void insertKasir() throws SQLException, ClassNotFoundException {
-        if (!validateInputEmpty()){
+        if (validateInputEmpty()){
             navigation.showDialog("Gagal", "Harap lengkapi form yang dibutuhkan!");
             return;
         }
@@ -194,7 +191,7 @@ public class KelolaKasir extends AdminBase implements Initializable {
     }
 
     private void updateKasir() throws SQLException, ClassNotFoundException {
-        if (!validateInputEmpty()){
+        if (validateInputEmpty()){
             navigation.showDialog("Gagal", "Harap lengkapi form yang dibutuhkan!");
             return;
         }
@@ -273,10 +270,10 @@ public class KelolaKasir extends AdminBase implements Initializable {
     }
 
     private boolean validateInputEmpty(){
-        return telponKasir.getText() != null && !telponKasir.getText().trim().equals("")
-                && namaKasir.getText() != null && !namaKasir.getText().trim().equals("")
-                && passwordKasir.getText() != null && !passwordKasir.getText().trim().equals("")
-                && bioskopKasir.getValue() != null;
+        return telponKasir.getText() == null || telponKasir.getText().trim().equals("")
+                || namaKasir.getText() == null || namaKasir.getText().trim().equals("")
+                || passwordKasir.getText() == null || passwordKasir.getText().trim().equals("")
+                || bioskopKasir.getValue() == null;
     }
 }
 

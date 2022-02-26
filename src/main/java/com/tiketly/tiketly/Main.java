@@ -23,7 +23,7 @@ public class Main extends Application {
         Database db = new Database();
         if (db.ping()) {
 //            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/kasir/riwayatTransaksi.fxml").toUri().toURL();
-            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/admin/kelolaKasir.fxml").toUri().toURL();
+            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/admin/kelolaBioskop.fxml").toUri().toURL();
 //            url = Paths.get("src/main/resources/com/tiketly/tiketly/views/login.fxml").toUri().toURL();
 
 //            url = Paths.get("src/main/resources/com/tiketly/tiketly/play.fxml").toUri().toURL();
