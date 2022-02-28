@@ -20,7 +20,6 @@
             <AnchorPane prefHeight="87.0" prefWidth="200.0" styleClass="modal-header">
                <children>
                   <Label layoutX="34.0" layoutY="18.0" styleClass="top-bar-label" text="Detail Bioskop" />
-                  <Button layoutX="893.0" layoutY="19.0" mnemonicParsing="false" onAction="#deleteBioskop" styleClass="btn-transparent" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">

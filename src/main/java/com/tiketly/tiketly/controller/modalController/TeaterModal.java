@@ -4,6 +4,7 @@ import com.tiketly.tiketly.controller.adminController.KelolaBioskop;
 import database.Database;
 import database.QueryBuilder;
 import helper.Helper;
+import helper.Navigation;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -34,6 +35,7 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
     public HBox updateKursi;
     DataTravel dataTravel = DataTravel.getInstance();
     Helper helper = new Helper();
+    Navigation navigation = new Navigation();
 
     public TableView<TableTeaterItem> tableTeater;
     public TextField namaTeaterField;
@@ -64,29 +66,41 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
     }
 
     public void simpanTeater(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        insertTeater();
+        if (idTeater.getText() == null) {
+            insertTeater();
+        } else {
+            updateTeater();
+        }
     }
 
     public void hapusTeater(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        Database database = new Database();
-        Connection conn = database.getConnection();
+        Database db = new Database();
+        Connection conn = db.getConnection();
         try {
             conn.setAutoCommit(false);
-            Database db1 = new Database();
-            db1.table("teater");
-            db1.where("idteater = ?", Integer.parseInt(idTeater.getText()));
-            if ((Integer) database.execute(conn, db1.getQueryUpdate("hapus", 1)) > 0) {
-                Database db2 = new Database();
-                db2.table("kursi_teater");
-                db2.where("idteater = ?", Integer.parseInt(idTeater.getText()));
-                if ((Integer) database.execute(conn, db1.getQueryUpdate("hapus", 1)) > 0) {
-                    btnHapusTeater.setVisible(false);
-                    clearField();
-                    setValueTableTeater();
-                }
-            }
+
+            QueryBuilder qb = new QueryBuilder();
+            qb.table("teater");
+            qb.where("idteater = ?", idTeaterInt);
+            db.execute(conn, qb.getQueryUpdate("hapus", 1));
+
+            QueryBuilder qb2 = new QueryBuilder();
+            qb2.table("kursi_teater");
+            qb2.where("idteater = ?", idTeaterInt);
+            db.execute(conn, qb2.getQueryUpdate("hapus", 1));
+
+            QueryBuilder qb3 = new QueryBuilder();
+            qb3.table("jadwal");
+            qb3.where("idteater = ?", idTeaterInt);
+            db.execute(conn, qb3.getQueryUpdate("hapus", 1));
 
             conn.commit();
+
+            btnHapusTeater.setVisible(false);
+            clearField();
+            setValueTableTeater();
+            navigation.showDialog("Sukses", "Sukses menghapus teater");
+
         } catch (SQLException e) {
             e.printStackTrace();
             try {
@@ -130,12 +144,49 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
                     kursiTeaterInsertData.add(kursiTeater);
                 }
             }
-            if ((int) db.execute(conn, qb.geQuerytBulkInsert("kursi_teater", kursiTeaterInsertData)) > 0) {
-                btnHapusTeater.setVisible(false);
-                clearField();
-                setValueTableTeater();
-            }
+            db.execute(conn, qb.geQuerytBulkInsert("kursi_teater", kursiTeaterInsertData));
             conn.commit();
+
+            btnHapusTeater.setVisible(false);
+            clearField();
+            setValueTableTeater();
+            navigation.showDialog("Sukses", "Sukses menambahkan teater");
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            try {
+                System.err.print("Transaction is being rolled back");
+                conn.rollback();
+            } catch (SQLException excep) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void updateTeater() throws SQLException, ClassNotFoundException {
+        Database db = new Database();
+        Connection conn = db.getConnection();
+
+        try {
+            conn.setAutoCommit(false);
+            QueryBuilder qb = new QueryBuilder();
+            qb.table("teater");
+            qb.where("idteater = ?", idTeaterInt);
+            db.execute(conn, qb.getQueryUpdate("nama", namaTeaterField.getText()));
+
+            if (namaKursi.getValue() != null){
+                QueryBuilder qb2 = new QueryBuilder();
+                qb2.table("kursi_teater");
+                qb2.where("idteater = ?", idTeaterInt);
+                qb2.where("nama = ?", namaKursi.getValue());
+                db.execute(conn, qb2.getQueryUpdate("hapus", statusKursi.getValue().equals("Rusak") ? 1 : 0));
+            }
+
+            conn.commit();
+
+            btnHapusTeater.setVisible(false);
+            clearField();
+            setValueTableTeater();
+            navigation.showDialog("Sukses", "Sukses mengupdate teater");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             try {
@@ -211,8 +262,6 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
         Database database = new Database();
         database.table("kursi_teater");
         database.where("idteater = ?", idTeater);
-        database.where("hapus = 0");
-        database.where("hapus = 0");
         ArrayList<Map<String, Object>> kursiTeaterResult = database.getArrayMapResult();
         namaKursi.getItems().clear();
         for (Map<String, Object> kursiTeater : kursiTeaterResult) {

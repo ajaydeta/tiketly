@@ -3,6 +3,7 @@ package com.tiketly.tiketly.controller.modalController;
 import database.Database;
 import database.QueryBuilder;
 import helper.Helper;
+import helper.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -26,6 +27,7 @@ public class HapusBioskopModal implements Initializable {
     public Label labelDisclaimer;
     DataTravel dataTravel = DataTravel.getInstance();
     Helper helper = new Helper();
+    Navigation navigation = new Navigation();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -77,6 +79,8 @@ public class HapusBioskopModal implements Initializable {
             }
 
             conn.commit();
+            navigation.showDialog("Sukses", "Sukses menghapus bioskop");
+
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.close();
             Routes routes = new Routes();

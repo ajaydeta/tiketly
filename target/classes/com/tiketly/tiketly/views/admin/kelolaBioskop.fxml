@@ -150,7 +150,7 @@
                            </styleClass>
                         </Button>
                         <TextField fx:id="idBioskop" editable="false" layoutX="58.0" layoutY="579.0" visible="false" />
-                        <Button fx:id="btnHapusBioskop" layoutX="25.0" layoutY="396.0" mnemonicParsing="false" onAction="#hapusBioskop" text="Hapus Teater">
+                        <Button fx:id="btnHapusBioskop" layoutX="25.0" layoutY="396.0" mnemonicParsing="false" onAction="#hapusBioskop" text="Hapus Bioskop">
                            <styleClass>
                               <String fx:value="btn-red" />
                               <String fx:value="btn" />
