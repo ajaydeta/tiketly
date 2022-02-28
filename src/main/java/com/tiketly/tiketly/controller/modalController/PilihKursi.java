@@ -49,7 +49,7 @@ public class PilihKursi extends BuatTransaksi implements Initializable {
         database2.select("kursi_teater.*", "IF(transaksi_kursi.idkursi IS NULL, 1, 0) as status_kursi", "teater.baris", "teater.kolom");
         database2.join("JOIN teater ON jadwal.idteater = teater.idteater");
         database2.join("JOIN kursi_teater ON kursi_teater.idteater = teater.idteater");
-        database2.join("LEFT JOIN transaksi_kursi ON jadwal.idjadwal = transaksi_kursi.idjadwal AND kursi_teater.id = transaksi_kursi.idkursi");
+        database2.join("LEFT JOIN transaksi_kursi ON jadwal.idjadwal = transaksi_kursi.idjadwal AND kursi_teater.id = transaksi_kursi.idkursi AND transaksi_kursi.hapus = 0");
         database2.where("jadwal.idjadwal = ?", dataTravel.getData("idjadwal"));
         ArrayList<Map<String, Object>> kursiResult = database2.getArrayMapResult();
 

@@ -112,6 +112,7 @@
 
 .btn-transparent{
     -fx-background-color: transparent;
+    -fx-cursor: hand;
 }
 
 .btn-red{

@@ -61,19 +61,6 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
         btnHapusTeater.setVisible(false);
         inputBarisKolom.setVisible(true);
         updateKursi.setVisible(false);
-
-    }
-
-    public void deleteBioskop(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
-        Database db = new Database();
-        db.table("bioskop");
-        db.where("idbioskop = ?", dataTravel.getData("idBioskop"));
-        if (db.update("hapus", 1) > 0) {
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
-            Routes routes = new Routes();
-            routes.toKelolaBioskop(actionEvent);
-        }
     }
 
     public void simpanTeater(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -92,7 +79,7 @@ public class TeaterModal extends KelolaBioskop implements Initializable {
                 Database db2 = new Database();
                 db2.table("kursi_teater");
                 db2.where("idteater = ?", Integer.parseInt(idTeater.getText()));
-                if ((Integer)database.execute(conn, db1.getQueryUpdate("hapus", 1)) > 0){
+                if ((Integer) database.execute(conn, db1.getQueryUpdate("hapus", 1)) > 0) {
                     btnHapusTeater.setVisible(false);
                     clearField();
                     setValueTableTeater();

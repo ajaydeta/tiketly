@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class KelolaBioskop extends AdminBase implements Initializable {
-//    DataTravel dataTravel = DataTravel.getInstance();
+    //    DataTravel dataTravel = DataTravel.getInstance();
     Helper helper = new Helper();
 
     public TableView<TableBioskopItem> tableBioskop;
@@ -33,6 +33,7 @@ public class KelolaBioskop extends AdminBase implements Initializable {
     public ChoiceBox<String> provinsiBioskop;
     public ChoiceBox<String> kotaBioskop;
     public Button btnLihatTeater;
+    public Button btnHapusBioskop;
 
     protected int idProvinsi;
     protected int idKota;
@@ -47,6 +48,7 @@ public class KelolaBioskop extends AdminBase implements Initializable {
         ArrayList<Map<String, Object>> provinsiResult = null;
 
         btnLihatTeater.setVisible(false);
+        btnHapusBioskop.setVisible(false);
 
         database.select();
         database.table("provinsi");
@@ -144,6 +146,7 @@ public class KelolaBioskop extends AdminBase implements Initializable {
             setValueTableBioskop();
             clearField();
             btnLihatTeater.setVisible(false);
+            btnHapusBioskop.setVisible(false);
             navigation.showDialog("Sukses", "Pembaharuan data bioskop telah berhasil");
         }
 
@@ -151,9 +154,12 @@ public class KelolaBioskop extends AdminBase implements Initializable {
 
     public void lihatTeater(ActionEvent actionEvent) throws IOException {
         dataTravel.addData("idBioskop", idBioskopInt);
-
-        Navigation navigation = new Navigation();
         navigation.showModal(actionEvent, "Data Teater", 988, 650,"teaterModal", null, null);
+    }
+
+    public void hapusBioskop(ActionEvent actionEvent) throws IOException {
+        dataTravel.addData("idBioskop", idBioskopInt);
+        navigation.showModal(actionEvent, "Hapus Bioskop", 322, 450,"hapusBioskopModal", null, null);
     }
 
     public void useFilter(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
@@ -272,9 +278,11 @@ public class KelolaBioskop extends AdminBase implements Initializable {
 
             this.idBioskopInt = tableItem.getIdBioskop();
             btnLihatTeater.setVisible(true);
+            btnHapusBioskop.setVisible(true);
 
         } else if (mouseEvent.getClickCount() == 1){
             btnLihatTeater.setVisible(false);
+            btnHapusBioskop.setVisible(false);
             clearField();
         }
     }
