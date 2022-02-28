@@ -1,14 +1,19 @@
 package com.tiketly.tiketly.controller.adminController;
 
 import database.Database;
+import database.QueryBuilder;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import model.TableBioskopItem;
 import model.TableFilmItem;
+import routes.Routes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -79,13 +84,36 @@ public class KelolaFilm extends AdminBase implements Initializable {
     }
 
     public void hapusFilm(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
-        Database database = new Database();
-        database.table("film");
-        database.where("id = ?", this.idfilmInt);
-        if (database.update("hapus", 1) > 0){
+        Database db = new Database();
+        Connection conn = db.getConnection();
+
+        try {
+            conn.setAutoCommit(false);
+            QueryBuilder qb = new QueryBuilder();
+            qb.table("film");
+            qb.where("id = ?", this.idfilmInt);
+            db.execute(conn, qb.getQueryUpdate("hapus", 1));
+
+            QueryBuilder qb2 = new QueryBuilder();
+            qb2.table("jadwal");
+            qb2.where("idfilm = ?", this.idfilmInt);
+            qb2.where("hapus = ?", 0);
+            db.execute(conn, qb2.getQueryUpdate("hapus", 1));
+
+            conn.commit();
+
             setValueTableFilm();
             btnHapusFilm.setVisible(false);
             clearField();
+            navigation.showDialog("Sukses", "Sukses menghapus film");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                System.err.print("Transaction is  being rolled back");
+                conn.rollback();
+            } catch (SQLException excep) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -173,6 +201,7 @@ public class KelolaFilm extends AdminBase implements Initializable {
                     )
             );
             clearField();
+            navigation.showDialog("Sukses", "Berhasil menambahkan film.");
         }
     }
 
@@ -192,7 +221,7 @@ public class KelolaFilm extends AdminBase implements Initializable {
             setValueTableFilm();
             btnHapusFilm.setVisible(false);
             clearField();
-            System.out.println("update sukses");
+            navigation.showDialog("Sukses", "Berhasil mengupdate film.");
         }
 
     }
