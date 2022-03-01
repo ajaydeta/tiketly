@@ -74,7 +74,7 @@ public class JadwalFilm extends AdminBase implements Initializable {
         }
     }
 
-    private void insertJadwal() throws SQLException, ClassNotFoundException {
+    private void insertJadwal() throws SQLException, ClassNotFoundException{
         String judulStr = judul.getValue();
         int idbioskop = Integer.parseInt(helper.getIdDalamKurung(bioskop.getValue()));
         int idteater = Integer.parseInt(helper.getIdDalamKurung(teater.getValue()));
@@ -93,6 +93,7 @@ public class JadwalFilm extends AdminBase implements Initializable {
         if (database.insert("jadwal", data) > 0) {
             clearField();
             setTableJadwal();
+            navigation.showDialog("Sukses", "Berhasil menambah jadwal");
         }
     }
 
@@ -117,6 +118,7 @@ public class JadwalFilm extends AdminBase implements Initializable {
         if (database.updates(data) > 0){
             clearField();
             setTableJadwal();
+            navigation.showDialog("Sukses", "Berhasil mengupdate jadwal");
         }
     }
 
