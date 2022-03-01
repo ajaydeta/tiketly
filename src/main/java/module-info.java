@@ -8,6 +8,7 @@ module com.tiketly.tiketly {
     requires java.sql;
     requires java.desktop;
     requires com.fasterxml.jackson.databind;
+    requires jasperreports;
 
     opens com.tiketly.tiketly to javafx.fxml;
     opens com.tiketly.tiketly.views.admin to javafx.fxml;

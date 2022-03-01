@@ -8,16 +8,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.WindowEvent;
+import model.ReportModel;
 import model.TablePembelianItem;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.time.ZoneId;
+import java.util.*;
 
 public class Pembelian extends AdminBase implements Initializable {
     public TableView<TablePembelianItem> tablePembelian;
@@ -50,6 +52,57 @@ public class Pembelian extends AdminBase implements Initializable {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void exportLaporan(ActionEvent actionEvent) throws JRException, SQLException, ClassNotFoundException {
+        Database database = new Database();
+        database.table("transaksi");
+        database.select("transaksi.id AS noNota","`user`.nama AS namaKasir","film.judul","bioskop.nama AS bioskop","jadwal.harga","transaksi.total_bayar AS total","COUNT( transaksi_kursi.id ) AS jumlahKursi","transaksi.created_at AS createdAt");
+        database.join("JOIN `user` ON `user`.iduser = transaksi.idkasir");
+        database.join("JOIN jadwal ON jadwal.idjadwal = transaksi.idjadwal");
+        database.join("JOIN film ON jadwal.idfilm = film.id");
+        database.join("JOIN bioskop ON bioskop.idbioskop = transaksi.idbioskop");
+        database.join("JOIN transaksi_kursi ON transaksi_kursi.idtransaksi = transaksi.id");
+        database.groupBy("transaksi.id");
+        ArrayList<Map<String, Object>> reportResult = database.getArrayMapResult();
+        ArrayList<ReportModel> dataSource = new ArrayList<>();
+
+        for (Map<String, Object> report : reportResult){
+            dataSource.add(new ReportModel(
+                    (String) report.get("noNota"),
+                    (String) report.get("namaKasir"),
+                    (String) report.get("judul"),
+                    (String) report.get("bioskop"),
+                    helper.formatDateTimeFull((LocalDateTime) report.get("createdAt")),
+                    (long) report.get("jumlahKursi"),
+                    (float) report.get("total"),
+                    (float) report.get("harga")
+            ));
+        }
+
+
+        String template = "src/main/resources/com/tiketly/tiketly/reportTemplate.jrxml";
+        Date d = new Date();
+        LocalDateTime l = d.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        String fileName = "ReportTransaksiTiketly_" + helper.formatDateTimeFullNoSpace(l) + ".pdf";
+//        String fileName = "ReportTransaksiTiketly.pdf";
+        String dest = "src/main/resources/com/tiketly/tiketly/"+fileName;
+
+        File file = new File(template);
+        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        Map<String, Object> parameters = new HashMap<>();
+
+        parameters.put("tanggalExport", helper.formatDateTimeFull(l));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JRBeanCollectionDataSource(dataSource));
+        JasperExportManager.exportReportToPdfFile(jasperPrint, dest);
+
+        File source = new File(dest);
+        File destination = new File(System.getProperty("user.home") + "/Desktop/"+fileName);
+
+        if (!destination.exists()) {
+            source.renameTo(destination);
+        }
+        navigation.showDialog("Sukses", "Export sukses, sistem akan secara default menempatkan hasil di desktop anda.");
     }
 
     private void setItemTable() throws SQLException, ClassNotFoundException {

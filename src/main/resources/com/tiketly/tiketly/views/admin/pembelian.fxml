@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.adminController.Pembelian">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tiketly.tiketly.controller.adminController.Pembelian">
    <left>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@../../css/style.css" BorderPane.alignment="CENTER">
          <styleClass>
@@ -122,24 +122,37 @@
                </VBox.margin>
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
-                     <AnchorPane prefHeight="68.0" prefWidth="715.0">
+                     <AnchorPane prefHeight="0.0" prefWidth="996.0">
                         <VBox.margin>
                            <Insets bottom="16.0" />
                         </VBox.margin>
                         <children>
-                           <Button layoutY="14.0" mnemonicParsing="false" onAction="#openFilterPembelian" text="Filter Pembelian">
-                              <styleClass>
-                                 <String fx:value="btn-yellow" />
-                                 <String fx:value="btn" />
-                              </styleClass>
-                              <graphic>
-                                 <ImageView>
-                                    <image>
-                                       <Image url="@../../assets/icon/Settings-adjust.png" />
-                                    </image>
-                                 </ImageView>
-                              </graphic>
-                           </Button>
+                           <HBox>
+                              <children>
+                                 <Button mnemonicParsing="false" onAction="#openFilterPembelian" text="Filter Pembelian">
+                                    <styleClass>
+                                       <String fx:value="btn-yellow" />
+                                       <String fx:value="btn" />
+                                    </styleClass>
+                                    <graphic>
+                                       <ImageView>
+                                          <image>
+                                             <Image url="@../../assets/icon/Settings-adjust.png" />
+                                          </image>
+                                       </ImageView>
+                                    </graphic>
+                                    <HBox.margin>
+                                       <Insets right="24.0" />
+                                    </HBox.margin>
+                                 </Button>
+                                 <Button mnemonicParsing="false" onAction="#exportLaporan" prefHeight="48.0" prefWidth="155.0" text="Export Laporan">
+                                    <styleClass>
+                                       <String fx:value="btn-primary" />
+                                       <String fx:value="btn" />
+                                    </styleClass>
+                                 </Button>
+                              </children>
+                           </HBox>
                         </children>
                      </AnchorPane>
                      <TableView fx:id="tablePembelian" VBox.vgrow="ALWAYS">

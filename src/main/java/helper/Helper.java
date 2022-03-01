@@ -58,6 +58,10 @@ public class Helper {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return  t.format(formatter);
     }
+    public String formatDateTimeFullNoSpace(LocalDateTime t){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy-HHmmss");
+        return  t.format(formatter);
+    }
 
     public String formatDateSlash(Timestamp t){
         Locale locale = new Locale("id", "ID");
