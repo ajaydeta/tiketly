@@ -2,6 +2,7 @@ package com.tiketly.tiketly.controller.auth;
 
 import database.Database;
 import helper.Helper;
+import helper.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -30,12 +31,17 @@ public class Login implements Initializable {
     public ImageView capchaImage;
     public TextField capchaText;
     private String capchaImageNameOld;
+    private String idOld = "";
     private String capchaImageName = "";
     private int loginAttempt = 1;
     private Map<String, Object> userData = new HashMap<>();
     private boolean idNotEmpty = false;
     private boolean passNotEmpty = false;
     private boolean capchaNotEmpty = false;
+
+    Routes routes = new Routes();
+    DataTravel dataTravel = DataTravel.getInstance();
+    Navigation navigation = new Navigation();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -65,9 +71,24 @@ public class Login implements Initializable {
         String pass = password.getText();
         String capcha = capchaText.getText();
 
-        if (validateInput(id, pass, capcha)) {
-            Routes routes = new Routes();
-            DataTravel dataTravel = DataTravel.getInstance();
+        Database database = new Database();
+        database.select();
+        database.table("user");
+        database.where("iduser = ?", id);
+        database.where("hapus = ?", 0);
+        this.userData = database.getOneMapResult();
+
+        if (this.userData.isEmpty()) {
+            navigation.showDialog("Gagal", "ID tidak terdaftar, periksa kembali.");
+            return;
+        }
+
+        if ((boolean) this.userData.get("blokir")) {
+            navigation.showDialog("Gagal", "Akun anda telah diblockir, silahkan hubungi admin.");
+            return;
+        }
+
+        if (validateInput(pass, capcha)) {
             dataTravel.addData("SESSION", this.userData);
             if ((Integer) this.userData.get("role") == 1) {
                 routes.toKelolaKasir(actionEvent);
@@ -75,13 +96,23 @@ public class Login implements Initializable {
                 routes.toHome(actionEvent);
             }
         } else {
-            loginAttempt++;
-            if (loginAttempt > 3) {
-                Database database = new Database();
-                database.table("user");
-                database.where("iduser = ?", id);
-                database.update("blokir", 1);
+            if (idOld.equals(id) && (Integer) this.userData.get("role") == 2) {
+                loginAttempt++;
+                if (loginAttempt > 2) {
+                    Database database2 = new Database();
+                    database2.table("user");
+                    database2.where("iduser = ?", id);
+                    database2.update("blokir", 1);
+
+                    idKasir.clear();
+                    navigation.showDialog("Gagal", "Akun anda telah diblockir, silahkan hubungi admin.");
+                }
+            } else {
+                idOld = id;
+                loginAttempt = 0;
             }
+            password.clear();
+            capchaText.clear();
         }
 
 
@@ -92,6 +123,19 @@ public class Login implements Initializable {
             capchaImageNameOld = capchaImageName;
             setCapchaImage();
         }
+    }
+
+    private boolean validateInput(String pass, String capcha) throws SQLException, ClassNotFoundException {
+        if (!capcha.toLowerCase().equals(capchaImageName)) {
+            navigation.showDialog("Gagal", "Capcha tidak sesuai");
+            return false;
+        }
+
+        if (!pass.equals(this.userData.get("password"))) {
+            navigation.showDialog("Gagal", "Password tidak sesuai.");
+            return false;
+        }
+        return true;
     }
 
     private void setCapchaImage() {
@@ -107,24 +151,5 @@ public class Login implements Initializable {
         }
 
         capchaImage.setImage(image);
-    }
-
-    private boolean validateInput(String id, String pass, String capcha) throws SQLException, ClassNotFoundException {
-        if (!capcha.toLowerCase().equals(capchaImageName)) {
-            return false;
-        }
-
-        Database database = new Database();
-        database.select();
-        database.table("user");
-        database.where("iduser = ?", id);
-        database.where("hapus = ?", 0);
-        this.userData = database.getOneMapResult();
-
-        if ((boolean) this.userData.get("blokir")) {
-            return false;
-        }
-
-        return pass.equals(this.userData.get("password"));
     }
 }
